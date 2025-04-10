@@ -1,5 +1,6 @@
-﻿using CapStoneBackEnd.DTOs.Category;
+﻿using CapStoneBackEnd.DTOs.Company;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -7,29 +8,29 @@ namespace CapStoneBackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CompanyController : ControllerBase
     {
-        private readonly CategoryService _categoryService;
+        private readonly CompanyService _companyService;
 
-        public CategoryController(CategoryService categoryService) 
+        public CompanyController(CompanyService companyService)
         {
-            _categoryService = categoryService;
+            _companyService = companyService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCompanies()
         {
             try
             {
-                var categories = await _categoryService.GetAllCategoriesAsync();
-                if (categories == null) 
+                var companies = await _companyService.GetAllComapaniesAsync();
+                if (companies == null)
                 {
                     return BadRequest(new { message = "Ops qualcosa è andato storto!" });
                 }
 
-                return Ok(new { categories });
+                return Ok(new { companies });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Log.Error(ex, ex.Message);
                 return StatusCode(500, new { message = "Ops qualcosa è andato storto. Riprova più tardi!" });
@@ -37,17 +38,17 @@ namespace CapStoneBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCategory([FromBody] AddCategoryDto addCategoryDto)
+        public async Task<IActionResult> AddCompany([FromBody] AddCompanyDto addCompanyDto)
         {
             try
             {
-                var result = await _categoryService.AddCategoryAsync(addCategoryDto);
-                if (!result) 
+                var result = await _companyService.AddCompanyAsync(addCompanyDto);
+                if (!result)
                 {
                     return BadRequest(new { message = "Ops qualcosa è andato storto!" });
                 }
 
-                return Ok(new { message = "Categoria aggiunta con successo!" });
+                return Ok(new { message = "Compagnia aggiunta con successo!" });
             }
             catch (Exception ex)
             {
@@ -57,17 +58,17 @@ namespace CapStoneBackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCompany(Guid id)
         {
             try
             {
-                var result = await _categoryService.DeleteCategoryAsync(id);
+                var result = await _companyService.DeleteCompanyAsync(id);
                 if (!result)
                 {
                     return BadRequest(new { message = "Ops qualcosa è andato storto!" });
                 }
 
-                return Ok(new { mesagge = "Categoria eliminata con successo!" });
+                return Ok(new { message = "Compagnia eliminata con successo!" });
             }
             catch (Exception ex)
             {

@@ -95,6 +95,7 @@ try
     builder.Services.AddScoped<GameService>();
     builder.Services.AddScoped<AccountService>();
     builder.Services.AddScoped<CategoryService>();
+    builder.Services.AddScoped<CompanyService>();
 
     var app = builder.Build();
     app.UseStaticFiles(new StaticFileOptions

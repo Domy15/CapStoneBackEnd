@@ -118,7 +118,7 @@ namespace CapStoneBackEnd.Controllers
         }
 
         [HttpPost("extraImages/{id}")]
-        public async Task<IActionResult> AddExtraImage(Guid id, AddExtraImageDto addExtraImageDto)
+        public async Task<IActionResult> AddExtraImage(Guid id,[FromForm] AddExtraImageDto addExtraImageDto)
         {
             try
             {

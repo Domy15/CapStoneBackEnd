@@ -31,6 +31,10 @@ namespace CapStoneBackEnd.Services
             try
             {
                 var categories = await _context.Categories.ToListAsync();
+                if (categories == null)
+                {
+                    return null;
+                }
 
                 var categoryList = new List<GetCategoryDto>();
 

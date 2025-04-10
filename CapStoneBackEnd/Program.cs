@@ -96,6 +96,8 @@ try
     builder.Services.AddScoped<AccountService>();
     builder.Services.AddScoped<CategoryService>();
     builder.Services.AddScoped<CompanyService>();
+    builder.Services.AddScoped<WishListService>();
+    builder.Services.AddScoped<LibraryService>();
 
     var app = builder.Build();
     app.UseStaticFiles(new StaticFileOptions

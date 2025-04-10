@@ -94,6 +94,7 @@ try
     builder.Services.AddScoped<RoleManager<ApplicationRole>>();
     builder.Services.AddScoped<GameService>();
     builder.Services.AddScoped<AccountService>();
+    builder.Services.AddScoped<CategoryService>();
 
     var app = builder.Build();
     app.UseStaticFiles(new StaticFileOptions

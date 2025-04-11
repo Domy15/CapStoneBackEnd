@@ -1,10 +1,13 @@
 ﻿using CapStoneBackEnd.Models.VideoGames;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace CapStoneBackEnd.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class WishListController : ControllerBase
@@ -56,6 +59,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{userName}/{id}")]
         public async Task<IActionResult> RemoveFromWishList(string userName, Guid id)
         {

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using CapStoneBackEnd.DTOs.Account;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CapStoneBackEnd.Controllers
 {
@@ -128,6 +129,7 @@ namespace CapStoneBackEnd.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost("updatePfP/{userName}")]
         public async Task<IActionResult> UpdateProfileImage(string userName, [FromForm] UpdateImageProfileDto imageFile)
         {
@@ -147,6 +149,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("UpdateProfile/{UserName}")]
         public async Task<IActionResult> UpdateProfile(string UserName, [FromBody] UpdateUserRequestDto userUpdate)
         {

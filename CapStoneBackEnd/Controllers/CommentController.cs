@@ -1,5 +1,6 @@
 ﻿using CapStoneBackEnd.DTOs.Comment;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -57,6 +58,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddComment([FromBody] AddCommentDto addCommentDto)
         {
@@ -77,6 +79,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateComment(Guid id, [FromBody] string Content)
         {
@@ -97,6 +100,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment(Guid id)
         {

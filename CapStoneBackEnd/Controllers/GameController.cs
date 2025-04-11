@@ -1,5 +1,6 @@
 ﻿using CapStoneBackEnd.DTOs.Game;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -57,6 +58,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddGame([FromForm] AddGameDto addGameDto)
         {
@@ -77,6 +79,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGame(Guid id, [FromForm] UpdateGameDto updateGameDto)
         {
@@ -97,6 +100,7 @@ namespace CapStoneBackEnd.Controllers
             } 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGame(Guid id)
         {
@@ -117,6 +121,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("extraImages/{id}")]
         public async Task<IActionResult> AddExtraImage(Guid id,[FromForm] AddExtraImageDto addExtraImageDto)
         {
@@ -146,6 +151,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("extraImages/{id}")]
         public async Task<IActionResult> DeleteExtraImage(Guid id)
         {

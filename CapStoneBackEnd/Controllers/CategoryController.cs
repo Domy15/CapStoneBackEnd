@@ -1,5 +1,6 @@
 ﻿using CapStoneBackEnd.DTOs.Category;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -36,6 +37,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody] AddCategoryDto addCategoryDto)
         {
@@ -56,6 +58,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {

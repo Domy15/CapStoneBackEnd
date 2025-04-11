@@ -1,5 +1,6 @@
 ﻿using CapStoneBackEnd.DTOs.Company;
 using CapStoneBackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -37,6 +38,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddCompany([FromBody] AddCompanyDto addCompanyDto)
         {
@@ -57,6 +59,7 @@ namespace CapStoneBackEnd.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompany(Guid id)
         {

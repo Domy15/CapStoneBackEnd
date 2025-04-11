@@ -129,10 +129,38 @@ namespace CapStoneBackEnd.Services
             }
         }
 
-        public async Task<bool> UpdateCommentAsync(string content)
+        public async Task<bool> UpdateCommentAsync(Guid id, string content)
         {
             try
             {
+                var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+                if (comment == null)
+                {
+                    return false;
+                }
+
+                comment.Content = content;
+
+                return await SaveAsync();
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteCommentAsync(Guid id)
+        {
+            try
+            {
+                var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+                if (comment == null)
+                {
+                    return false;
+                }
+
+                _context.Comments.Remove(comment);
+
                 return await SaveAsync();
             }
             catch

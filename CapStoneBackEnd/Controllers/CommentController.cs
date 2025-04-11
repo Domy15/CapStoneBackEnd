@@ -58,12 +58,12 @@ namespace CapStoneBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(AddCommentDto addCommentDto)
+        public async Task<IActionResult> AddComment([FromBody] AddCommentDto addCommentDto)
         {
             try
             {
                 var result = await _commentService.AddCommentAsync(addCommentDto);
-                if(!result)
+                if (!result)
                 {
                     return BadRequest(new { message = "Ops qualcosa è andato storto!" });
                 }
@@ -71,7 +71,47 @@ namespace CapStoneBackEnd.Controllers
                 return Ok(new { message = "Commento aggiunto" });
             }
             catch (Exception ex)
-            { 
+            {
+                Log.Error(ex, ex.Message);
+                return StatusCode(500, new { message = "Ops qualcosa è andato storto. Riprova più tardi!" });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateComment(Guid id, [FromBody] string Content)
+        {
+            try
+            {
+                var result = await _commentService.UpdateCommentAsync(id, Content);
+                if (!result)
+                {
+                    return BadRequest(new { message = "Ops qualcosa è andato storto!" });
+                }
+
+                return Ok(new { message = "Commento aggiornato" });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                return StatusCode(500, new { message = "Ops qualcosa è andato storto. Riprova più tardi!" });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            try
+            {
+                var result = await _commentService.DeleteCommentAsync(id);
+                if (!result)
+                {
+                    return BadRequest(new { message = "Ops qualcosa è andato storto!" });
+                }
+
+                return Ok(new { message = "Commento eliminato" });
+            }
+            catch (Exception ex)
+            {
                 Log.Error(ex, ex.Message);
                 return StatusCode(500, new { message = "Ops qualcosa è andato storto. Riprova più tardi!" });
             }

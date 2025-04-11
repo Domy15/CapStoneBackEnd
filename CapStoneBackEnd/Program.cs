@@ -98,6 +98,8 @@ try
     builder.Services.AddScoped<CompanyService>();
     builder.Services.AddScoped<WishListService>();
     builder.Services.AddScoped<LibraryService>();
+    builder.Services.AddScoped<CartService>();
+    builder.Services.AddScoped<CommentService>();
 
     var app = builder.Build();
     app.UseStaticFiles(new StaticFileOptions

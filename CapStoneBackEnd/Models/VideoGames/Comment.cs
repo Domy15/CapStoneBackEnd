@@ -13,10 +13,13 @@ namespace CapStoneBackEnd.Models.VideoGames
         public required string Content { get; set; }
 
         [Required]
-        public string IdUser { get; set; }
+        public required string IdUser { get; set; }
 
         [Required]
         public Guid IdGame { get; set; }
+
+        [Required]
+        public DateTime PublishedAt { get; set; }
 
 
 

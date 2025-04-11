@@ -29,6 +29,9 @@ namespace CapStoneBackEnd.Data
             modelBuilder.Entity<ApplicationUserRole>().HasOne(ur => ur.User).WithMany(u => u.ApplicationUserRole).HasForeignKey(ur => ur.UserId);
             modelBuilder.Entity<ApplicationUserRole>().HasOne(ur => ur.Role).WithMany(u => u.ApplicationUserRole).HasForeignKey(ur => ur.RoleId);
             modelBuilder.Entity<ApplicationUser>().HasIndex(u => u.UserName).IsUnique();
+            modelBuilder.Entity<VideoGame>().HasIndex(g => g.Title).IsUnique();
+            modelBuilder.Entity<Company>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
 
             modelBuilder.Entity<Library>().HasOne(l => l.VideoGame).WithMany(v => v.Library).HasForeignKey(l => l.IdGame);
             modelBuilder.Entity<Library>().HasOne(l => l.ApplicationUser).WithMany(u => u.Library).HasForeignKey(l => l.IdUser);
@@ -53,6 +56,10 @@ namespace CapStoneBackEnd.Data
             modelBuilder.Entity<Cart>().HasKey(c => new { c.UserId, c.GameId });
 
             modelBuilder.Entity<ExtraImage>().HasOne(i => i.VideoGame).WithMany(c => c.ExtraImages).HasForeignKey(i => i.GameId);
+
+            modelBuilder.Entity<Comment>().Property(c => c.PublishedAt).HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<VideoGame>().Property(v => v.Price).HasPrecision(10, 2);
 
             modelBuilder.Entity<ApplicationRole>().HasData(
                 new ApplicationRole() { Id = "66D7DB2A-56A6-4E65-90A2-26A33701C613", Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = "66D7DB2A-56A6-4E65-90A2-26A33701C613" },

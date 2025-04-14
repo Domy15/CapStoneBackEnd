@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Carousel from "./Carousel";
+import { Container } from "react-bootstrap";
 
 const HomePage = () => {
     const [games, setGames] = useState([]);
@@ -30,7 +31,9 @@ const HomePage = () => {
     useEffect(() => {
         getGames();
     }, []);
-    return (<Carousel games={sortedGames} />);
+    return (
+            <Carousel games={sortedGames} />
+    );
 }
 
 export default HomePage;

@@ -40,6 +40,7 @@ const Carousel = ({ games }) => {
 
     return (
         <div className="my-4 container">
+            <h4 className="text-white">ULTIME USCITE CONSIGLIATE</h4>
             <Slider {...settings} className="custom-slick-dots">
                 {games.map((game, index) => (
                     <div
@@ -71,7 +72,7 @@ const Carousel = ({ games }) => {
                                 {game.extraImages &&
                                     <Row>
                                         {game.extraImages.slice(0, 4).map((image, i) => (
-                                            <Col xs={6} key={i} className="mb-3"><img src={image.image.startsWith('http') ? image.image : `https://localhost:7227/${image.image}`} style={{width: "140px"}} /></Col>
+                                            <Col xs={6} key={i} className="mb-3"><img src={image.image.startsWith('http') ? image.image : `https://localhost:7227/${image.image}`} style={{ width: "140px" }} /></Col>
                                         ))}
                                     </Row>}
                                 <p className="mb-1">

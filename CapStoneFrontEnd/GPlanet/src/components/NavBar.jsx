@@ -24,7 +24,7 @@ const NavBar = () => {
                 <Link to={"/"} className=" navbar-brand"><img src="src\assets\LogoGPlanet.png" style={{ width: "3.5em" }} /></Link>
                 <Nav className="me-auto">
                     <Link to={"/"} className="fs-4 nav-link">HOME</Link>
-                    <Link to={"/library"} className="fs-4 nav-link">LIBRERIA</Link>
+                    <Link to={profile?.userName ? "/library" : "/login"} className="fs-4 nav-link">LIBRERIA</Link>
                     <Link to={profile?.userName ? "/profile" : "/login"} className="nav-link fs-4"> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
                 </Nav>
 

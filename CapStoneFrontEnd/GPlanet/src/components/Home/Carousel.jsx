@@ -70,23 +70,23 @@ const Carousel = ({ games }) => {
                                 <h3>{game.title}</h3>
                                 {game.extraImages &&
                                     <Row>
-                                        {game.extraImages.slice(0, 4).map((image) => (
-                                            <Col xs={6} className="mb-3"><img src={image.image.startsWith('http') ? image.image : `https://localhost:7227/${image.image}`} style={{width: "140px"}} /></Col>
+                                        {game.extraImages.slice(0, 4).map((image, i) => (
+                                            <Col xs={6} key={i} className="mb-3"><img src={image.image.startsWith('http') ? image.image : `https://localhost:7227/${image.image}`} style={{width: "140px"}} /></Col>
                                         ))}
                                     </Row>}
                                 <p className="mb-1">
                                     <span className="text-success">Consigliato</span> se ti piacciono titoli con le etichette:
                                 </p>
                                 <div className="d-flex gap-2 flex-wrap">
-                                    {game.categories.map((category) => (
-                                        <span className="badge bg-secondary">{category.name}</span>
+                                    {game.categories.map((category, i) => (
+                                        <span key={i} className="badge bg-secondary">{category.name}</span>
                                     ))}
                                 </div>
                             </div>
 
                             <div>
                                 <span className="badge bg-success">
-                                    {game.price > 0 ? `${game.price}€` : "Free to Play"}
+                                    {game.price > 0 ? `${game.price}€` : "Free-to-Play"}
                                 </span>
                             </div>
                         </div>

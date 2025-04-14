@@ -2,7 +2,7 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -15,25 +15,40 @@ import HomePage from './components/Home/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-
-
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(AutoLogin());
   }, []);
 
+  useEffect(() => {
+    const path = location.pathname;
+
+    let pageTitle = "G-PLANET";
+
+    if (path === "/") {
+      pageTitle = "Benvenuto su G-PLANET";
+    } else if (path === "/login") {
+      pageTitle = "Accedi";
+    } else if (path.startsWith("/register")) {
+      pageTitle = "Registrati";
+    }
+
+    document.title = pageTitle;
+  }, [location]);
+
   return (
-    <BrowserRouter>
+    <>
       <NavBar />
       <Routes>
 
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<ProtectedRoute children ={<Login />} allowedRoles={[null]} />} />
-        <Route path="/register" element={<ProtectedRoute children ={<Register />} allowedRoles={[null]} />} />
+        <Route path="/login" element={<ProtectedRoute children={<Login />} allowedRoles={[null]} />} />
+        <Route path="/register" element={<ProtectedRoute children={<Register />} allowedRoles={[null]} />} />
 
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 

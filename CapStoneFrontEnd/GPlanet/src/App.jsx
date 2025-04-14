@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { AutoLogin } from './redux/actions/account'
 import Login from './components/Account/Login'
+import Register from './components/Account/Register'
 
 function App() {
 
@@ -23,7 +24,8 @@ function App() {
       <NavBar />
       <Routes>
 
-      <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
       </Routes>
     </BrowserRouter>

@@ -12,7 +12,7 @@ export const RegisterAccount = async (form) => {
             body: JSON.stringify(form),
         });
         if (!response.ok) {
-            throw new Error("Errore nella registrazione. Riprova.");
+            return null;
         } else {
             return await response.json();
         }
@@ -37,14 +37,16 @@ export const LoginAccount = async (form) => {
             console.log("Non autorizzato!!!!!")
         }
         if (!response.ok) {
-            throw new Error("Errore nel login. Riprova.");
+            return false
         } else {
             const data = await response.json();
             const localItem = JSON.stringify(data);
             localStorage.setItem("token", localItem);
+            return true
         }
     } catch (error) {
         console.error("Error:", error);
+        return false
     }
 };
 

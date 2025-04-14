@@ -26,7 +26,7 @@ const HomePage = () => {
     }
     const sortedGames = [...games]
         .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
-        .slice(0, 6);
+        .slice(0, 12);
 
     useEffect(() => {
         getGames();

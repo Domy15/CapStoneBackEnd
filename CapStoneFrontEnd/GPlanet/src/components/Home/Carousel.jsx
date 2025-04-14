@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import { Col, Row } from "react-bootstrap";
 
 const Carousel = ({ games }) => {
     const PrevArrow = ({ onClick }) => (
@@ -41,24 +42,52 @@ const Carousel = ({ games }) => {
         <div className="my-4 container">
             <Slider {...settings} className="custom-slick-dots">
                 {games.map((game, index) => (
-                    <div key={index}>
-                        <div
-                            className="position-relative"
-                            style={{
-                                height: "400px",
-                                borderRadius: "10px",
-                                overflow: "hidden",
-                                boxShadow: "0 4px 15px rgba(0,0,0,0.3)"
-                            }}
-                        >
+                    <div
+                        key={index}
+                        className="d-flex align-items-stretch mb-4"
+                        style={{
+                            height: "400px",
+                            borderRadius: "12px",
+                            overflow: "hidden",
+                            background: "#111",
+                            boxShadow: "8px 0 30px rgba(0,0,0,0.4)"
+                        }}
+                    >
+                        <div className="w-75">
                             <img
-                                src={game.coverLarge}
+                                src={game.coverLarge.startsWith('http') ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
                                 alt={game.title}
                                 className="w-100 h-100 object-fit-cover"
                             />
-                            <div className="position-absolute bottom-0 start-0 w-100 p-3 bg-dark bg-opacity-50 text-light">
-                                <h4 className="m-0">{game.title}</h4>
-                                <small>{game.price > 0 ? `${game.price}€` : "free-to-play"}</small>
+                        </div>
+                        <div
+                            className="w-25 text-light d-flex flex-column justify-content-between p-4"
+                            style={{
+                                background: "linear-gradient(to top right, #0e0e0e, #1a1a1a)"
+                            }}
+                        >
+                            <div>
+                                <h3>{game.title}</h3>
+                                {game.extraImages &&
+                                    <Row>
+                                        {game.extraImages.slice(0, 4).map((image) => (
+                                            <Col xs={6} className="mb-3"><img src={image.image.startsWith('http') ? image.image : `https://localhost:7227/${image.image}`} style={{width: "140px"}} /></Col>
+                                        ))}
+                                    </Row>}
+                                <p className="mb-1">
+                                    <span className="text-success">Consigliato</span> se ti piacciono titoli con le etichette:
+                                </p>
+                                <div className="d-flex gap-2 flex-wrap">
+                                    {game.categories.map((category) => (
+                                        <span className="badge bg-secondary">{category.name}</span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <span className="badge bg-success">
+                                    {game.price > 0 ? `${game.price}€` : "Free to Play"}
+                                </span>
                             </div>
                         </div>
                     </div>

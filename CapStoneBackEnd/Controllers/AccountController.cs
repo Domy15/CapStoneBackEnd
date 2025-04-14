@@ -79,7 +79,7 @@ namespace CapStoneBackEnd.Controllers
                 });
             }
 
-            await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, "Admin");
 
             return Ok(new
             {

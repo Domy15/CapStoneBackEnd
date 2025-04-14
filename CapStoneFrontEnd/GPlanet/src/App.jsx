@@ -12,6 +12,7 @@ import Register from './components/Account/Register';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HomePage from './components/Home/HomePage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
@@ -27,9 +28,9 @@ function App() {
       <NavBar />
       <Routes>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<ProtectedRoute children ={<Login />} allowedRoles={[null]} />} />
+        <Route path="/register" element={<ProtectedRoute children ={<Register />} allowedRoles={[null]} />} />
 
       </Routes>
     </BrowserRouter>

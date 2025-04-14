@@ -25,6 +25,9 @@ namespace CapStoneBackEnd.Models.VideoGames
         public required string Cover { get; set; }
 
         [Required]
+        public required string CoverLarge { get; set; }
+
+        [Required]
         public required Guid CompanyId { get; set; }
 
 

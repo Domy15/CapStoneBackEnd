@@ -9,6 +9,7 @@ namespace CapStoneBackEnd.DTOs.Game
         public required decimal Price { get; set; }
         public required DateOnly ReleaseDate { get; set; }
         public required IFormFile Cover { get; set; }
+        public required IFormFile CoverLarge { get; set; }
         public required Guid CompanyId { get; set; }
         public List<int> CategoriesId { get; set; }
     }

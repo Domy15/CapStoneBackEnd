@@ -55,6 +55,7 @@ namespace CapStoneBackEnd.Services
                         Price = game.VideoGame.Price,
                         ReleaseDate = game.VideoGame.ReleaseDate,
                         Cover = game.VideoGame.Cover,
+                        CoverLarge = game.VideoGame.CoverLarge,
                         Company = game.VideoGame.Company.Name,
                         Categories = game.VideoGame.GameCategories.Select(gc => new CategoryDto
                         {

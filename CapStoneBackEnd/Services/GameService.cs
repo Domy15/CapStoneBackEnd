@@ -42,6 +42,7 @@ namespace CapStoneBackEnd.Services
                         Price = g.Price,
                         ReleaseDate = g.ReleaseDate,
                         Cover = g.Cover,
+                        CoverLarge = g.CoverLarge,
                         Company = g.Company.Name,
                         Categories = g.GameCategories.Select(gc => new CategoryDto
                         {
@@ -81,6 +82,7 @@ namespace CapStoneBackEnd.Services
                     Price = existingGame.Price,
                     ReleaseDate = existingGame.ReleaseDate,
                     Cover = existingGame.Cover,
+                    CoverLarge = existingGame.CoverLarge,
                     Company = existingGame.Company.Name,
                     Categories = existingGame.GameCategories.Select(gc => new CategoryDto
                     {
@@ -129,6 +131,25 @@ namespace CapStoneBackEnd.Services
                     webPath = $"assets/images/{fileName}";
                 }
 
+                string webPathLarge = null;
+                if (addGameDto.CoverLarge != null)
+                {
+                    var fileName = Guid.NewGuid() + Path.GetExtension(addGameDto.CoverLarge.FileName);
+                    var imageDir = Path.Combine(Directory.GetCurrentDirectory(), "assets", "images");
+
+                    if (!Directory.Exists(imageDir))
+                        Directory.CreateDirectory(imageDir);
+
+                    var filePath = Path.Combine(imageDir, fileName);
+
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await addGameDto.CoverLarge.CopyToAsync(stream);
+                    }
+
+                    webPath = $"assets/images/{fileName}";
+                }
+
                 var newGame = new VideoGame()
                 {
                     Title = addGameDto.Title,
@@ -136,6 +157,7 @@ namespace CapStoneBackEnd.Services
                     Price = addGameDto.Price,
                     ReleaseDate = addGameDto.ReleaseDate,
                     Cover = webPath,
+                    CoverLarge = webPathLarge,
                     CompanyId = addGameDto.CompanyId,
                 };
 
@@ -206,6 +228,39 @@ namespace CapStoneBackEnd.Services
                     }
 
                     game.Cover = Path.Combine("assets", "images", fileName).Replace("\\", "/");
+                }
+
+                if (updateGameDto.CoverLarge != null && updateGameDto.CoverLarge.Length > 0)
+                {
+                    if (!string.IsNullOrEmpty(game.CoverLarge))
+                    {
+                        var relativePath = game.CoverLarge.Replace("/", Path.DirectorySeparatorChar.ToString())
+                                                            .Replace("\\", Path.DirectorySeparatorChar.ToString());
+
+                        var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }
+
+                    var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "images");
+                    if (!Directory.Exists(uploadDirectory))
+                    {
+                        Directory.CreateDirectory(uploadDirectory);
+                    }
+
+                    var fileExtension = Path.GetExtension(updateGameDto.CoverLarge.FileName);
+                    var fileName = Guid.NewGuid().ToString() + fileExtension;
+
+                    var filePath = Path.Combine(uploadDirectory, fileName);
+
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await updateGameDto.CoverLarge.CopyToAsync(stream);
+                    }
+
+                    game.CoverLarge = Path.Combine("assets", "images", fileName).Replace("\\", "/");
                 }
                 game.Description = updateGameDto.Description;
                 game.Price = updateGameDto.Price;

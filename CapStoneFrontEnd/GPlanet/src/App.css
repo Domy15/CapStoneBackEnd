@@ -1,5 +1,5 @@
 html, body {
-  background-color: #011712;
+  background-color: #1A2328;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -8,9 +8,34 @@ html, body {
 }
 
 .background-main-green {
-  background-color: #011712;
+  background-color: #1A2328;
 }
 
 .background-grey {
   background-color: #1A1A1A;
+}
+
+/* Quadrati base */
+.custom-slick-dots li button:before {
+  content: "";
+  display: block;
+  width: 20px !important;
+  height: 8px !important;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+  font-size: 0 !important;
+  line-height: 0;
+}
+
+/* Rettangolo attivo in verde */
+.custom-slick-dots li.slick-active button:before {
+  background-color: #28a745;
+}
+
+.custom-slick-dots ul {
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
 }

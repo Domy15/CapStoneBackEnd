@@ -52,11 +52,11 @@ export const SetToken = () => {
     return async (dispatch) => {
         let getToken = JSON.parse(localStorage.getItem("token"))
         const token = jwtDecode(getToken.token)
-        console.log(token)
         dispatch({
             type: "SAVE_PROFILE",
             payload: {
                 name: token.name,
+                userName: token.username,
                 email: token.email,
                 role: token.role,
                 expire: token.exp,
@@ -82,16 +82,18 @@ export const AutoLogin = () => {
             try {
                 const getToken = JSON.parse(token);
                 const tokenJwt = jwtDecode(getToken.token);
-
+                
                 const currentTime = Math.floor(Date.now() / 1000);
                 if (tokenJwt.exp > currentTime) {
                     dispatch({
                         type: "SAVE_PROFILE",
                         payload: {
                             name: tokenJwt.name,
+                            userName: tokenJwt.username,
                             email: tokenJwt.email,
                             role: tokenJwt.role,
                             expire: tokenJwt.exp,
+                            isExpired: false
                         },
                     });
                 } else {

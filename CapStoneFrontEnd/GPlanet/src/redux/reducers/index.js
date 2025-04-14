@@ -1,5 +1,6 @@
 const initialState = {
   profile: {
+    name: null,
     userName: null,
     email: null,
     role: null,
@@ -21,6 +22,7 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         profile: {
           name: null,
+          userName: null,
           email: null,
           role: null,
           expire: null,

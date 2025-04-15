@@ -26,7 +26,6 @@ const HomePage = () => {
             })
             if (response.ok) {
                 const data = await response.json()
-                console.log(data.games);
                 setGames(data.games);
                 setIsLoading(false);
                 setIsError(false);

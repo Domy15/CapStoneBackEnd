@@ -27,7 +27,6 @@ const GameNavBar = () => {
             if (response.ok) {
                 const data = await response.json()
                 setCategories(data.categories)
-                console.log(data.categories)
             }
             else {
                 throw new Error("Errore nel recupero dei dati!")

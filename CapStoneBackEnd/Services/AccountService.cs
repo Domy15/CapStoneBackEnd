@@ -1,4 +1,5 @@
-﻿using CapStoneBackEnd.Data;
+﻿using Azure.Identity;
+using CapStoneBackEnd.Data;
 using CapStoneBackEnd.DTOs.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -92,7 +93,7 @@ namespace CapStoneBackEnd.Services
                 }
 
                 var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.UserName == userUpdate.UserName);
-                if (user != null && user.UserName != existingUser.UserName) 
+                if (user != null && user.UserName != existingUser.UserName)
                 {
                     return (false, "Nome utente già in uso");
                 }
@@ -112,6 +113,34 @@ namespace CapStoneBackEnd.Services
             catch
             {
                 return (false, "Ops qualcosa è andato storto");
+            }
+        }
+
+        public async Task<GetProfileDto?> GetProfileAsync(string email)
+        {
+            try
+            {
+                var profile = await _context.ApplicationUsers.FirstOrDefaultAsync(p => p.Email == email);
+                if (profile == null) 
+                { 
+                    return null;
+                }
+
+                var newProfile = new GetProfileDto()
+                { 
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    UserName = profile.UserName,
+                    ImageProfile = profile.ImageProfile,
+                    Phone = profile.PhoneNumber,
+                    BirthDate= profile.BirthDate 
+                };
+
+                return newProfile;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

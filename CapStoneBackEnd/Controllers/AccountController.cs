@@ -60,6 +60,7 @@ namespace CapStoneBackEnd.Controllers
                 FirstName = registerRequest.FirstName,
                 LastName = registerRequest.LastName,
                 UserName = registerRequest.UserName,
+                PhoneNumber = registerRequest.Phone,
                 BirthDate = registerRequest.BirthDate
             };
             var result = await _userManager.CreateAsync(newUser, registerRequest.Password);
@@ -162,6 +163,33 @@ namespace CapStoneBackEnd.Controllers
                 }
 
                 return Ok(new { message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("profile/me")]
+        public async Task<IActionResult> GetProfile()
+        {
+            try
+            {
+                var userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return Unauthorized(new { message = "Utente non valido." });
+                }
+
+                var profile = await _accountService.GetProfileAsync(userEmail);
+                if (profile == null)
+                {
+                    return BadRequest(new { message = "Ops qualcosa è andato storto" });
+                }
+
+                return Ok(new { profile });
             }
             catch (Exception ex)
             {

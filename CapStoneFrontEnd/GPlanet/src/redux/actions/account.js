@@ -86,7 +86,7 @@ export const AutoLogin = () => {
                 const tokenJwt = jwtDecode(getToken.token);
                 
                 const currentTime = Math.floor(Date.now() / 1000);
-                if (tokenJwt.exp > currentTime) {
+                if (tokenJwt && tokenJwt.exp > currentTime) {
                     dispatch({
                         type: "SAVE_PROFILE",
                         payload: {

@@ -58,7 +58,8 @@ const Carousel = ({ games }) => {
                             <img
                                 src={game.coverLarge.startsWith('http') ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
                                 alt={game.title}
-                                className="w-100 h-100 object-fit-cover"
+                                className="w-100 object-fit-cover"
+                                style={{height: "35em"}}
                             />
                         </div>
                         <div

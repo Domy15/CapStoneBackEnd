@@ -1,11 +1,23 @@
+import { useState } from "react";
 import { Button, Col, Container, Form, FormControl, Nav, Navbar, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
-import { Link, useLocation, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 const GameNavBar = () => {
+    const [search, setSearch] = useState("");
     const { pathname } = useLocation();
     const isGameDetail = useMatch("/game/:id");
     const isVisible = ["/", "/games"].includes(pathname) || isGameDetail;
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (search.trim()) {
+            navigate("/games", {
+                state: { search },
+            });
+        }
+    }
 
     return (
         <>
@@ -13,7 +25,7 @@ const GameNavBar = () => {
                 <Container className="mt-4">
                     <Navbar
                         expand="lg"
-                        style={{paddingTop: "0.5rem", paddingBottom: "0.5rem",}}
+                        style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem", }}
                         className="shadow-sm animated-gradient">
                         <Container>
                             <Nav className="me-auto">
@@ -22,8 +34,10 @@ const GameNavBar = () => {
                                 <Link className="text-light nav-link mx-2">Categorie</Link>
                             </Nav>
 
-                            <Form className="d-flex" style={{ position: "relative", minWidth: "240px" }}>
+                            <Form className="d-flex" style={{ position: "relative", minWidth: "240px" }} onSubmit={handleSubmit}>
                                 <FormControl
+                                    value={search}
+                                    onChange={(e) => (setSearch(e.target.value))}
                                     type="search"
                                     placeholder="Cerca"
                                     className="text-light custom-search"
@@ -34,7 +48,8 @@ const GameNavBar = () => {
                                         padding: "0.5rem 0.75rem",
                                         paddingRight: "40px",
                                         borderRadius: "4px",
-                                        width: "100%",}}/>
+                                        width: "100%",
+                                    }} />
                                 <Button
                                     type="submit"
                                     variant="link"
@@ -45,7 +60,8 @@ const GameNavBar = () => {
                                         transform: "translateY(-50%)",
                                         color: "#ccc",
                                         padding: 0,
-                                        border: "none",}}>
+                                        border: "none",
+                                    }}>
                                     <Search />
                                 </Button>
                             </Form>

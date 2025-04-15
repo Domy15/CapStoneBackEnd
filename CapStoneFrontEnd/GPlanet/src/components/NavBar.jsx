@@ -1,18 +1,19 @@
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Person } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../redux/actions/account";
 import { useEffect } from "react";
 
 const NavBar = () => {
     const profile = useSelector(state => state.profile);
     const dispatch = useDispatch()
-    const navigateTo = useNavigate()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const logoutAccount = () => {
         dispatch(Logout())
-        navigateTo("/login")
+        navigate("/login")
     }
 
     useEffect(() => {
@@ -23,9 +24,9 @@ const NavBar = () => {
             <div className="d-flex mx-auto align-items-center" style={{ width: "95%" }}>
                 <Link to={"/"} className=" navbar-brand"><img src="src\assets\LogoGPlanet.png" style={{ width: "3.5em" }} /></Link>
                 <Nav className="me-auto">
-                    <Link to={"/"} className="fs-4 nav-link">HOME</Link>
-                    <Link to={profile?.userName ? "/library" : "/login"} className="fs-4 nav-link">LIBRERIA</Link>
-                    <Link to={profile?.userName ? "/profile" : "/login"} className="nav-link fs-4"> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
+                    <Link to={"/"} className={`fs-4 nav-link ${location.pathname === "/" ? "active-link" : ""}`}>HOME</Link>
+                    <Link to={profile?.userName ? "/library" : "/login"} className={`fs-4 nav-link ${location.pathname === "/library" ? "active-link" : ""}`}>LIBRERIA</Link>
+                    <Link to={profile?.userName ? "/profile" : "/login"} className={`nav-link fs-4 ${location.pathname === "/profile" || location.pathname === "/login" ? "active-link" : ""}`}> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
                 </Nav>
 
                 <NavDropdown title={<Person />} id="basic-nav-dropdown" className="ms-auto text-secondary fs-4" align="end">

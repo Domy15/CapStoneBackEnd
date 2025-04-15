@@ -39,3 +39,8 @@ html, body {
   gap: 8px;
   padding: 0;
 }
+
+.active-link {
+  color: #249556 !important;
+  text-decoration: underline !important;
+}

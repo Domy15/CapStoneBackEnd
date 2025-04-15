@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HomePage from './components/Home/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
+import GameNavBar from './components/GameNavBar';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <GameNavBar />
       <Routes>
 
         <Route path="/" element={<HomePage />} />

@@ -32,7 +32,9 @@ const HomePage = () => {
         getGames();
     }, []);
     return (
+        <Container>
             <Carousel games={sortedGames} />
+        </Container>
     );
 }
 

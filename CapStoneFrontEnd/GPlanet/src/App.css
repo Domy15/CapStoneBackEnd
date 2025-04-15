@@ -44,3 +44,26 @@ html, body {
   color: #249556 !important;
   text-decoration: underline !important;
 }
+
+.custom-search::placeholder {
+  color: #bbb !important;
+  opacity: 1 !important;
+}
+
+.animated-gradient {
+  background: linear-gradient(to right, rgb(18, 59, 59), #061d17, rgb(18, 59, 59));
+  background-size: 300% 100%;
+  animation: moveGradient 8s linear infinite;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

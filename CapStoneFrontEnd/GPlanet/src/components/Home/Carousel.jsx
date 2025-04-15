@@ -39,7 +39,7 @@ const Carousel = ({ games }) => {
     };
 
     return (
-        <div className="my-4 container">
+        <div className="my-4">
             <h4 className="text-white">ULTIME USCITE CONSIGLIATE</h4>
             <Slider {...settings} className="custom-slick-dots">
                 {games.map((game, index) => (

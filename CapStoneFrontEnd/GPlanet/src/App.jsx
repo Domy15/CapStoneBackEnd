@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import HomePage from './components/Home/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import GameNavBar from './components/GameNavBar';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function App() {
         <Route path="/register" element={<ProtectedRoute children={<Register />} allowedRoles={[null]} />} />
 
       </Routes>
+      <Footer />
     </>
   )
 }

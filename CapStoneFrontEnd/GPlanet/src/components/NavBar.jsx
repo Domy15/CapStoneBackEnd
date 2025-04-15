@@ -1,7 +1,7 @@
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Person } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import { Logout } from "../redux/actions/account";
 import { useEffect } from "react";
 
@@ -10,6 +10,8 @@ const NavBar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+    const isGameDetail = useMatch("/game/:id");
+    const isVisible = ["/", "/games"].includes(location.pathname) || isGameDetail;
 
     const logoutAccount = () => {
         dispatch(Logout())
@@ -24,7 +26,7 @@ const NavBar = () => {
             <div className="d-flex mx-auto align-items-center" style={{ width: "95%" }}>
                 <Link to={"/"} className=" navbar-brand"><img src="src\assets\LogoGPlanet.png" style={{ width: "3.5em" }} /></Link>
                 <Nav className="me-auto">
-                    <Link to={"/"} className={`fs-4 nav-link ${location.pathname === "/" ? "active-link" : ""}`}>HOME</Link>
+                    <Link to={"/"} className={`fs-4 nav-link ${isVisible ? "active-link" : ""}`}>NEGOZIO</Link>
                     <Link to={profile?.userName ? "/library" : "/login"} className={`fs-4 nav-link ${location.pathname === "/library" ? "active-link" : ""}`}>LIBRERIA</Link>
                     <Link to={profile?.userName ? "/profile" : "/login"} className={`nav-link fs-4 ${location.pathname === "/profile" || location.pathname === "/login" ? "active-link" : ""}`}> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
                 </Nav>

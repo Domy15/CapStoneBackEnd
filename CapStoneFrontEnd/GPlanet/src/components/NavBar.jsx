@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import { Logout } from "../redux/actions/account";
 import { useEffect } from "react";
+import logo from "../assets/LogoGPlanet.png"
 
 const NavBar = () => {
     const profile = useSelector(state => state.profile);
@@ -24,7 +25,7 @@ const NavBar = () => {
     return (
         <Navbar className="background-green" data-bs-theme="dark">
             <div className="d-flex mx-auto align-items-center" style={{ width: "95%" }}>
-                <Link to={"/"} className=" navbar-brand"><img src="src\assets\LogoGPlanet.png" style={{ width: "3.5em" }} /></Link>
+                <Link to={"/"} className=" navbar-brand"><img src={logo} style={{ width: "3.5em" }} /></Link>
                 <Nav className="me-auto">
                     <Link to={"/"} className={`fs-4 nav-link ${isVisible ? "active-link" : ""}`}>NEGOZIO</Link>
                     <Link to={profile?.userName ? "/library" : "/login"} className={`fs-4 nav-link ${location.pathname === "/library" ? "active-link" : ""}`}>LIBRERIA</Link>

@@ -103,9 +103,15 @@ const GamesList = () => {
                     </span>
                 }
             </div>
-            {isLoading && <div className="text-center mt-5"><Spinner animation="border" variant="success" /></div>}
-            {!isLoading && isError && <Alert className="mt-5" variant={"danger"}>Errore durante il recupero dei dati! Riprova più tardi.</Alert>}
-            {!isLoading && !isError &&
+            {isLoading ? (
+                <div className="text-center mt-5">
+                    <Spinner animation="border" variant="success" />
+                </div>
+            ) : isError ? (
+                <div className="text-danger text-center mt-5">
+                    <p>Errore durante il recupero dei dati!</p>
+                </div>
+            ) : games.length > 0 ? (
                 <>
                     <div className="d-flex justify-content-between align-items-center p-3" style={{ backgroundColor: "#212529" }}>
                         <div className="w-25 text-white">
@@ -145,7 +151,12 @@ const GamesList = () => {
                         </tbody>
                         {games.length > show && <button variant={"success"} className="mt-3 custom-button" onClick={() => setShow(show + 30)}>Mostra altro</button>}
                     </Table>
-                </>}
+                </>
+            ) : (
+                <div className="text-danger text-center mt-5">
+                    <p>Nessun gioco trovato!</p>
+                </div>
+            )}
         </Container>
     );
 }

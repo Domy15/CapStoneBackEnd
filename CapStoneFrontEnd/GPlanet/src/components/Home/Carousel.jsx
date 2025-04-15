@@ -3,8 +3,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import { Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Carousel = ({ games }) => {
+    const navigate = useNavigate();
+
     const PrevArrow = ({ onClick }) => (
         <div
             className="position-absolute top-50 start-0 translate-middle-y z-3"
@@ -54,7 +57,7 @@ const Carousel = ({ games }) => {
                             boxShadow: "8px 0 30px rgba(0,0,0,0.4)"
                         }}
                     >
-                        <div className="w-75">
+                        <div className="w-75" onClick={() => navigate(`/game/${game.id}`)} style={{cursor: "pointer"}}>
                             <img
                                 src={game.coverLarge.startsWith('http') ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
                                 alt={game.title}

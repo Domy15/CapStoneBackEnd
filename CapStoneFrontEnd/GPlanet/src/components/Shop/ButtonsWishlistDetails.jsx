@@ -81,7 +81,9 @@ const ButtonsWishlistDetails = () => {
     }
 
     useEffect(() => {
-        getWishlist();
+        if (userName) {
+            getWishlist();
+        }
     }, [userName, update])
 
     return (

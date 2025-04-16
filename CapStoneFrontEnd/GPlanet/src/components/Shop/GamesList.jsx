@@ -100,6 +100,29 @@ const GamesList = () => {
                     </span>
                 }
             </div>
+            <div className="d-flex justify-content-between align-items-center p-3" style={{ backgroundColor: "#212529" }}>
+                <div className="w-25 text-white">
+                    <label htmlFor="priceRange" className="form-label">Prezzo massimo: {maxPrice}€</label>
+                    <CustomRangeSlider
+                        min={0}
+                        max={150}
+                        step={1}
+                        value={maxPrice}
+                        onChange={setMaxPrice}
+                    />
+                </div>
+                <Form.Select
+                    className="w-25"
+                    value={sortOption}
+                    onChange={(e) => setSortOption(e.target.value)}
+                    style={{ backgroundColor: "#0B2A23", color: "white", border: "1px solid #198754" }}>
+                    <option className="text-white" value="">Filtra per...</option>
+                    <option className="text-white" value="asc">Data di rilascio (crescente)</option>
+                    <option className="text-white" value="desc">Data di rilascio (decrescente)</option>
+                    <option className="text-white" value="high">Prezzo più alto</option>
+                    <option className="text-white" value="low">Prezzo più basso</option>
+                </Form.Select>
+            </div>
             {isLoading ? (
                 <div className="text-center mt-5">
                     <Spinner animation="border" variant="success" />
@@ -109,32 +132,7 @@ const GamesList = () => {
                     <p>Errore durante il recupero dei dati!</p>
                 </div>
             ) : games.length > 0 ? (
-                <>
-                    <div className="d-flex justify-content-between align-items-center p-3" style={{ backgroundColor: "#212529" }}>
-                        <div className="w-25 text-white">
-                            <label htmlFor="priceRange" className="form-label">Prezzo massimo: {maxPrice}€</label>
-                            <CustomRangeSlider
-                                min={0}
-                                max={150}
-                                step={1}
-                                value={maxPrice}
-                                onChange={setMaxPrice}
-                            />
-                        </div>
-                        <Form.Select
-                            className="w-25"
-                            value={sortOption}
-                            onChange={(e) => setSortOption(e.target.value)}
-                            style={{ backgroundColor: "#0B2A23", color: "white", border: "1px solid #198754" }}>
-                            <option className="text-white" value="">Filtra per...</option>
-                            <option className="text-white" value="asc">Data di rilascio (crescente)</option>
-                            <option className="text-white" value="desc">Data di rilascio (decrescente)</option>
-                            <option className="text-white" value="high">Prezzo più alto</option>
-                            <option className="text-white" value="low">Prezzo più basso</option>
-                        </Form.Select>
-                    </div>
-                    <GameTable games={games} />
-                </>
+                <GameTable games={games} />
             ) : (
                 <div className="text-danger text-center mt-5">
                     <p>Nessun gioco trovato!</p>

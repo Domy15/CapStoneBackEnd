@@ -1,15 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import { Badge, Col, Image, Row, Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 
-const GameDetails = () => {
-    const { id } = useParams();
-    const [game, setGame] = useState();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [mainImage, setMainImage] = useState("");
-
+const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
+    
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString("it-IT", {
@@ -19,36 +11,6 @@ const GameDetails = () => {
         });
     };
 
-    const getGame = async () => {
-        try {
-            const response = await fetch("https://localhost:7227/api/Game/" + id);
-            if (response.ok) {
-                const data = await response.json();
-                setGame(data.game);
-                setMainImage(
-                    data.game.coverLarge.startsWith("http")
-                        ? data.game.coverLarge
-                        : `https://localhost:7227/${data.game.coverLarge}`
-                );
-                setLoading(false);
-                setError(false);
-            }
-            else {
-                setLoading(false);
-                setError(true);
-                throw new Error("Errore nel recupero dei dati!");
-            }
-        }
-        catch (error) {
-            console.log(error);
-            setLoading(false);
-            setError(true);
-        }
-    }
-
-    useEffect(() => {
-        getGame();
-    }, [id])
     return (
         <>
             {loading ? (

@@ -36,7 +36,7 @@ const Footer = () => {
                         <a href="https://github.com/Domy15?tab=repositories" target='blank' style={iconStyle}><Github /></a>
                     </div>
                     <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }} className="py-2 mt-5">
-                        © 2024 Copyright: <a className="text-white" href="/"> G-Planet.com </a>
+                        © 2025 Copyright: <a className="text-white" href="/"> G-Planet.com </a>
                     </div>
                 </Container>
             </footer>}

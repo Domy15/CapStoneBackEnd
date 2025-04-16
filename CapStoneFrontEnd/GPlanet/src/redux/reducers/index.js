@@ -7,6 +7,7 @@ const initialState = {
     expire: null,
     isExpired: true,
   },
+  update: false
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -29,6 +30,12 @@ const mainReducer = (state = initialState, action) => {
           isExpired: true,
         },
       };
+
+    case "UPDATE":
+      return{
+        ...state,
+        update: !state.update
+      }
 
     default:
       return state;

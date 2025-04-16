@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Badge, Col, Container, Image, Row, Spinner } from "react-bootstrap";
+import { Badge, Col, Image, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 const GameDetails = () => {
@@ -30,7 +30,6 @@ const GameDetails = () => {
                         ? data.game.coverLarge
                         : `https://localhost:7227/${data.game.coverLarge}`
                 );
-                console.log(data);
                 setLoading(false);
                 setError(false);
             }
@@ -51,7 +50,7 @@ const GameDetails = () => {
         getGame();
     }, [id])
     return (
-        <Container className="text-white mt-4">
+        <>
             {loading ? (
                 <div className="text-center mt-5">
                     <Spinner animation="border" variant="success" />
@@ -124,7 +123,7 @@ const GameDetails = () => {
                     )}
                 </Col>
             </Row>}
-        </Container>
+        </>
     );
 }
 

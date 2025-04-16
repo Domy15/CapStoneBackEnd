@@ -17,6 +17,7 @@ import GameNavBar from './components/GameNavBar';
 import Footer from './components/Footer';
 import GamesList from './components/Shop/GamesList';
 import GameDetails from './components/Shop/GameDetails';
+import DetailsPage from './components/Shop/DetailsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function App() {
         <Route path="/login" element={<ProtectedRoute children={<Login />} allowedRoles={[null]} />} />
         <Route path="/register" element={<ProtectedRoute children={<Register />} allowedRoles={[null]} />} />
         <Route path="/games" element={<GamesList />} />
-        <Route path="/game/:id" element={<GameDetails />} />
+        <Route path="/game/:id" element={<DetailsPage />} />
 
       </Routes>
       <Footer />

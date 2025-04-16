@@ -1,91 +1,88 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Alert, Button, Container, Form, Image, Spinner, Table } from "react-bootstrap";
+import { Container, Form, Spinner } from "react-bootstrap";
 import { XLg } from "react-bootstrap-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomRangeSlider from "./CustomRangeSlider";
+import GameTable from "./GameTable";
 
 const GamesList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
-    const [show, setShow] = useState(30);
+    const [allGames, setAllGames] = useState([]);
     const [games, setGames] = useState([]);
+
     const [sortOption, setSortOption] = useState("");
     const [maxPrice, setMaxPrice] = useState(150);
+
     const location = useLocation();
     const navigate = useNavigate();
     const category = location.state?.category;
     const search = location.state?.search;
     const gamesURL = "https://localhost:7227/api/Game";
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("it-IT", {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
-    };
-
-    const getGames = async () => {
+    const fetchGames = async () => {
         try {
-            const response = await fetch(gamesURL, {
-                method: 'GET'
-            })
+            const response = await fetch(gamesURL);
             if (response.ok) {
-                const data = await response.json()
-                let filteredGames = [...data.games];
-
-                switch (sortOption) {
-                    case "asc":
-                        filteredGames.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
-                        break;
-                    case "desc":
-                        filteredGames.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
-                        break;
-                    case "high":
-                        filteredGames.sort((a, b) => b.price - a.price);
-                        break;
-                    case "low":
-                        filteredGames.sort((a, b) => a.price - b.price);
-                        break;
-                    default:
-                        break;
-                }
-
-                filteredGames = filteredGames.filter(game => game.price <= maxPrice);
-
-                if (category) {
-                    filteredGames = filteredGames.filter(game =>
-                        game.categories.some(c => c.name.toLowerCase() === category.toLowerCase())
-                    );
-                }
-
-                if (search) {
-                    filteredGames = filteredGames.filter(game =>
-                        game.title.toLowerCase().includes(search.toLowerCase())
-                    );
-                }
-                setGames(filteredGames);
+                const data = await response.json();
+                setAllGames(data.games || []);
                 setIsLoading(false);
                 setIsError(false);
+            } else {
+                throw new Error("Errore durante il fetch");
             }
-            else {
-                setIsLoading(false);
-                setIsError(true);
-                throw new Error("Errore!")
-            }
-        }
-        catch (error) {
-            console.log(error);
+        } catch (error) {
+            console.error(error);
             setIsLoading(false);
             setIsError(true);
         }
+    };
+
+    const filterGames = () => {
+        let filtered = [...allGames];
+
+        if (category) {
+            filtered = filtered.filter(game =>
+                game.categories.some(c => c.name.toLowerCase() === category.toLowerCase())
+            );
+        }
+
+        if (search) {
+            filtered = filtered.filter(game =>
+                game.title.toLowerCase().includes(search.toLowerCase())
+            );
+        }
+
+        filtered = filtered.filter(game => game.price <= maxPrice);
+
+        switch (sortOption) {
+            case "asc":
+                filtered.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
+                break;
+            case "desc":
+                filtered.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+                break;
+            case "high":
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            case "low":
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            default:
+                break;
+        }
+
+        setGames(filtered);
     }
 
     useEffect(() => {
-        getGames();
-    }, [category, search, sortOption, maxPrice]);
+        fetchGames();
+    }, []);
+
+    useEffect(() => {
+        filterGames();
+    }, [allGames, category, search, maxPrice, sortOption]);
 
     return (
         <Container>
@@ -136,21 +133,7 @@ const GamesList = () => {
                             <option className="text-white" value="low">Prezzo più basso</option>
                         </Form.Select>
                     </div>
-                    <Table responsive hover variant="dark" className="mt-4">
-                        <tbody>
-                            {games.slice(0, show).map((game, index) => (
-                                <tr key={index} style={{ verticalAlign: "middle", cursor: "pointer" }} onClick={() => navigate(`/game/${game.id}`)}>
-                                    <td>
-                                        <Image src={game.coverLarge.startsWith('http') ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`} rounded style={{ width: 80, height: 40 }} />
-                                    </td>
-                                    <td>{game.title}</td>
-                                    <td>{formatDate(game.releaseDate)}</td>
-                                    <td>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                        {games.length > show && <button variant={"success"} className="mt-3 custom-button" onClick={() => setShow(show + 30)}>Mostra altro</button>}
-                    </Table>
+                    <GameTable games={games} />
                 </>
             ) : (
                 <div className="text-danger text-center mt-5">
@@ -159,6 +142,6 @@ const GamesList = () => {
             )}
         </Container>
     );
-}
+};
 
 export default GamesList;

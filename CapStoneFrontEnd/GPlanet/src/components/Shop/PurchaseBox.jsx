@@ -90,7 +90,7 @@ const PurchaseBox = ({ game }) => {
                     type: "UPDATE",
                 });
             } else {
-                throw new Error("Errore nell'aggiunta al carrello!")
+                throw new Error("Errore nell'aggiunta alla libreria!")
             }
         }
         catch (error) {

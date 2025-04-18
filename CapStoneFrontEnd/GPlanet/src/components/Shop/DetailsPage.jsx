@@ -5,6 +5,7 @@ import ButtonsWishlistDetails from "./ButtonsWishlistDetails";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PurchaseBox from "./PurchaseBox";
+import CommentSection from "./CommentSection";
 
 const DetailsPage = () => {
     const { id } = useParams();
@@ -48,6 +49,7 @@ const DetailsPage = () => {
             <GameDetails game={game} loading={loading} error={error} mainImage={mainImage} setMainImage={setMainImage} />
             <ButtonsWishlistDetails />
             {game && <PurchaseBox game={game} />}
+            <CommentSection />
         </Container>
     );
 }

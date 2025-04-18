@@ -311,3 +311,12 @@ body {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.comment-card .bi-pencil {
+  visibility: hidden;
+  transition: 0.2s ease;
+}
+
+.comment-card:hover .bi-pencil {
+  visibility: visible;
+}

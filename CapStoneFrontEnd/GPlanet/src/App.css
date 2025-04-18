@@ -337,3 +337,19 @@ body {
   color: #bbb !important;
   opacity: 1 !important;
 }
+
+@media (max-width: 576px) {
+  .game-card img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .game-card h2 {
+    font-size: 1.4rem !important;
+  }
+
+  .game-card .btn {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+}

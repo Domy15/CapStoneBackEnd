@@ -100,6 +100,7 @@ export const AutoLogin = () => {
                     });
                 } else {
                     localStorage.removeItem("token");
+                    dispatch({ type: "LOGOUT" });
                 }
             } catch (error) {
                 console.error("Errore nel decodificare il token", error);

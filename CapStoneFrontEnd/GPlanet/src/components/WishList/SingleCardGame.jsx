@@ -1,36 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { Badge, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const PurchaseBox = ({ game }) => {
+const SingleCardGame = ({ game }) => {
     const update = useSelector(state => state.update);
-    const userName = useSelector(state => state.profile.userName);
+    const { userName } = useParams();
     const dispatch = useDispatch();
     const [isThereCart, setIsThereCart] = useState(false);
     const [isThereLibrary, setIsThereLibrary] = useState(false);
-    const [isThere, setIsThere] = useState(false);
-
-    const getWishlist = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
-        try {
-            const response = await fetch(`https://localhost:7227/api/WishList/${userName}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setIsThere(data.wishList.some(g => g.id === game.id));
-            } else {
-                throw new Error("Errore nel recupero dei dati!");
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
 
     const getCart = async () => {
         const getToken = JSON.parse(localStorage.getItem("token"));
@@ -108,13 +87,9 @@ const PurchaseBox = ({ game }) => {
                 body: JSON.stringify([game.id])
             });
             if (response.ok) {
-                if (isThere) {
-                    removeFromWishList();
-                } else {
-                    dispatch({
-                        type: "UPDATE",
-                    });
-                }
+                dispatch({
+                    type: "UPDATE",
+                });
             } else {
                 throw new Error("Errore nell'aggiunta alla libreria!")
             }
@@ -148,43 +123,74 @@ const PurchaseBox = ({ game }) => {
     }
 
     useEffect(() => {
-        if (userName && game?.id) {
-            setIsThere(false);
-            setIsThereCart(false);
-            setIsThereLibrary(false);
-            getWishlist();
+        if (userName) {
             getCart();
             getLibrary();
         }
-    }, [update, game?.id])
+    }, [update])
     return (
-        <div className='d-flex justify-content-between align-items-center mt-5 p-4' style={{ backgroundColor: "#4C5B69" }}>
-            <h3 className='text-white'>{game.title}</h3>
+        <div className="d-flex flex-column flex-md-row bg-dark text-white p-3 rounded shadow-sm game-card my-3">
+            <img
+                src={game.coverLarge}
+                alt={game.title}
+                className="me-md-3 mb-3 mb-md-0 align-self-center"
+                style={{
+                    width: "100%",
+                    maxWidth: "25em",
+                    height: "auto",
+                    borderRadius: "5px"
+                }}
+            />
+            <div className="w-100">
+                <h2 className="fs-md-2">{game.title}</h2>
 
-            <div className='bg-black d-flex align-items-center p-1 ps-2' style={{ gap: "8px" }}>
-                <p className='text-white m-0'>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</p>
+                <div className="d-flex flex-column flex-md-row justify-content-between mt-3 mt-md-5 gap-4">
+                    <div>
+                        <div className="mb-4">
+                            <div className="small">
+                                SVILUPPATORE: <span className="text-info fw-bold">{game.company}</span>
+                            </div>
+                            <div className="small">
+                                DATA DI RILASCIO: <span>{game.releaseDate}</span>
+                            </div>
+                        </div>
 
-                {game.price === 0 && !isThereLibrary ? (
-                    <Button variant={"success"} onClick={AddToLibrary}>
-                        Aggiungi alla libreria
-                    </Button>
-                ) : isThereLibrary ? (
-                    <Button variant={"success"} disabled>
-                        Presente in Libreria
-                    </Button>
-                ) : isThereCart ? (
-                    <Button variant={"success"} disabled>
-                        Nel Carrello
-                    </Button>
-                ) : (
-                    <Button variant={"success"} onClick={addToCart}>
-                        Aggiungi al carrello
-                    </Button>
-                )}
+                        <div className="d-flex flex-wrap gap-2 mb-3">
+                            {game.categories.map((tag, i) => (
+                                <Badge bg="secondary" key={i} className="text-wrap">{tag.name}</Badge>
+                            ))}
+                        </div>
+                    </div>
 
+                    <div className="d-flex flex-column align-items-start">
+                        <div className='bg-black d-flex flex-wrap align-items-center gap-2 p-1 mb-3'>
+                            <p className='m-0'>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</p>
+                            {game.price === 0 && !isThereLibrary ? (
+                                <Button variant="success" onClick={AddToLibrary}>
+                                    Aggiungi alla libreria
+                                </Button>
+                            ) : isThereLibrary ? (
+                                <Button variant="success" disabled>
+                                    Presente in Libreria
+                                </Button>
+                            ) : isThereCart ? (
+                                <Button variant="success" disabled>
+                                    Nel Carrello
+                                </Button>
+                            ) : (
+                                <Button variant="success" onClick={addToCart}>
+                                    Aggiungi al carrello
+                                </Button>
+                            )}
+                        </div>
+                        <small className="text-secondary">
+                            Rimuovi dalla lista desideri (<span role="button" className="text-decoration-underline" onClick={removeFromWishList}>rimuovi</span>)
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
     );
-};
+}
 
-export default PurchaseBox;
+export default SingleCardGame;

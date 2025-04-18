@@ -47,9 +47,15 @@ const DetailsPage = () => {
     return (
         <Container className="text-white mt-4">
             <GameDetails game={game} loading={loading} error={error} mainImage={mainImage} setMainImage={setMainImage} />
-            <ButtonsWishlistDetails />
-            {game && <PurchaseBox game={game} />}
-            <CommentSection />
+            {!loading && !error && (
+                <ButtonsWishlistDetails />
+            )}
+            {!loading && !error && game && (
+                <PurchaseBox game={game} />
+            )}
+            {!loading && !error && (
+                <CommentSection />
+            )}
         </Container>
     );
 }

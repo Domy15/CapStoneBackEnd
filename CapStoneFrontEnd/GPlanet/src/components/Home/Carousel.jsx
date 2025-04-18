@@ -37,6 +37,17 @@ const Carousel = ({ games }) => {
         autoplaySpeed: 4000,
         prevArrow: <PrevArrow />,
         nextArrow: <NextArrow />,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: false,
+                    arrows: false,
+                }
+            }
+        ]
     };
 
     return (
@@ -44,7 +55,7 @@ const Carousel = ({ games }) => {
             <h4 className="text-white">ULTIME USCITE CONSIGLIATE</h4>
             <Slider {...settings} className="custom-slick-dots">
                 {games.map((game, index) => (
-                    <CarouselCard game={game} index={index} />
+                        <CarouselCard game={game} index={index} />
                 ))}
             </Slider>
         </div>

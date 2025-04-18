@@ -7,7 +7,8 @@ const initialState = {
     expire: null,
     isExpired: true,
   },
-  update: false
+  update: false,
+  loading: true,
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -16,6 +17,7 @@ const mainReducer = (state = initialState, action) => {
       return {
         ...state,
         profile: action.payload,
+        loading: false,
       };
 
     case "LOGOUT":
@@ -29,13 +31,14 @@ const mainReducer = (state = initialState, action) => {
           expire: null,
           isExpired: true,
         },
+        loading: false,
       };
 
     case "UPDATE":
-      return{
+      return {
         ...state,
-        update: !state.update
-      }
+        update: !state.update,
+      };
 
     default:
       return state;

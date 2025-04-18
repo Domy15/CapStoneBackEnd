@@ -15,7 +15,9 @@ const GameNavBar = () => {
     const [cart, setCart] = useState([]);
     const { pathname } = useLocation();
     const isGameDetail = useMatch("/game/:id");
-    const isVisible = ["/", "/games"].includes(pathname) || isGameDetail;
+    const isWishList = useMatch("/wishList/:userName");
+    const isCart = useMatch("/cart/:userName");
+    const isVisible = ["/", "/games"].includes(pathname) || isGameDetail || isWishList || isCart;
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {

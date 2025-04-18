@@ -62,6 +62,8 @@ const MiniCarousel = ({ games }) => {
                 breakpoint: 577,
                 settings: {
                     slidesToShow: 1,
+                    centerMode: true,
+                    arrows: false
                 },
             }
         ],

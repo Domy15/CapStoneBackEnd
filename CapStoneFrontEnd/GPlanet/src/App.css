@@ -320,3 +320,20 @@ body {
 .comment-card:hover .bi-pencil {
   visibility: visible;
 }
+
+.game-card:hover {
+  background-color: #2a2d32 !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.custom-search-wishList {
+  background-color: #141c20 !important;
+  border-color: black !important;
+  width: 65% !important;
+  height: 3em !important;
+}
+
+.custom-search-wishList::placeholder {
+  color: #bbb !important;
+  opacity: 1 !important;
+}

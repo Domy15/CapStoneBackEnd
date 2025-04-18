@@ -6,7 +6,7 @@ const SingleComment = ({ comment }) => {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.profile);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedContent, setEditedContent] = useState(comment.content);
+    const [editedContent, setEditedContent] = useState("");
 
     const isOwnerOrAdmin = currentUser.userName === comment.userName || currentUser.role === "Admin";
 
@@ -63,7 +63,7 @@ const SingleComment = ({ comment }) => {
                     <Pencil
                         role="button"
                         className="text-light"
-                        onClick={() => setIsEditing(true)}
+                        onClick={() => { setEditedContent(comment.content); setIsEditing(true); }}
                         title="Modifica commento"
                     />
                 ) : isOwnerOrAdmin && isEditing && (

@@ -61,11 +61,11 @@ const CommentSection = () => {
     return (
         <Row className="mt-5">
             {isThereLibrary && (
-                <Col className="p-3 text-white rounded">
+                <Col xs={12} lg={6} className="p-3 text-white rounded">
                     <AddCommentArea userName={userName} />
                 </Col>
             )}
-            <Col className="p-3">
+            <Col xs={12} lg={6} className="p-3">
                 {comments.length > 0 ? (
                     <>
                         {(showAll ? comments : comments.slice(0, 3)).map((comment, i) => (

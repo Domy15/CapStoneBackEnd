@@ -28,7 +28,7 @@ const NavBar = () => {
                 <Link to={"/"} className=" navbar-brand"><img src={logo} style={{ width: "3.5em" }} /></Link>
                 <Nav className="me-auto">
                     <Link to={"/"} className={`fs-4 nav-link ${isVisible ? "active-link" : ""}`}>NEGOZIO</Link>
-                    <Link to={profile?.userName ? "/library" : "/login"} className={`fs-4 nav-link ${location.pathname === "/library" ? "active-link" : ""}`}>LIBRERIA</Link>
+                    <Link to={profile?.userName ? `/library/${profile.userName}` : "/login"} className={`fs-4 nav-link ${location.pathname === `/library/${profile.userName}` ? "active-link" : ""}`}>LIBRERIA</Link>
                     <Link to={profile?.userName ? "/profile" : "/login"} className={`nav-link fs-4 ${location.pathname === "/profile" || location.pathname === "/login" ? "active-link" : ""}`}> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
                 </Nav>
 

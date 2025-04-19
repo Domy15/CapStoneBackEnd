@@ -19,6 +19,7 @@ import GamesList from './components/Shop/GamesList';
 import DetailsPage from './components/Shop/DetailsPage';
 import WishListPage from './components/WishList/WishListPage';
 import CartPage from './components/Cart/CartPage';
+import LibraryPage from './components/Library/LibraryPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,8 +56,11 @@ function App() {
         <Route path="/register" element={<ProtectedRoute children={<Register />} allowedRoles={[null]} />} />
         <Route path="/wishList/:userName" element={<ProtectedRoute children={<WishListPage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/cart/:userName" element={<ProtectedRoute children={<CartPage />} allowedRoles={["User", "Admin"]} />} />
+        <Route path="/library/:userName" element={<ProtectedRoute children={<LibraryPage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/games" element={<GamesList />} />
         <Route path="/game/:id" element={<DetailsPage />} />
+
+        <Route path="*" element={<HomePage />} />
 
       </Routes>
       <Footer />

@@ -100,6 +100,7 @@ try
     builder.Services.AddScoped<LibraryService>();
     builder.Services.AddScoped<CartService>();
     builder.Services.AddScoped<CommentService>();
+    builder.Services.AddScoped<ImageProxyService>();
 
     var app = builder.Build();
     app.UseStaticFiles(new StaticFileOptions

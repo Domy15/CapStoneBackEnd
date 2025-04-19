@@ -100,7 +100,6 @@ try
     builder.Services.AddScoped<LibraryService>();
     builder.Services.AddScoped<CartService>();
     builder.Services.AddScoped<CommentService>();
-    builder.Services.AddScoped<ImageProxyService>();
 
     var app = builder.Build();
     app.UseStaticFiles(new StaticFileOptions
@@ -108,20 +107,6 @@ try
         FileProvider = new PhysicalFileProvider(
             Path.Combine(Directory.GetCurrentDirectory(), "assets", "images")),
         RequestPath = "/assets/images"
-    });
-
-    app.Use(async (context, next) =>
-    {
-        if (context.Request.Path.StartsWithSegments("/assets/images"))
-        {
-            context.Response.OnStarting(() =>
-            {
-                context.Response.Headers["Access-Control-Allow-Origin"] = "*";
-                return Task.CompletedTask;
-            });
-        }
-
-        await next.Invoke();
     });
 
     app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

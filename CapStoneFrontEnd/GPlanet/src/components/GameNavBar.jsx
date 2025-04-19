@@ -100,7 +100,7 @@ const GameNavBar = () => {
     return (
         <>
             {isVisible &&
-                <Container className="mt-4">
+                <Container className="margin-top-custom">
                     <div className="d-flex justify-content-end">
                         {wishList.length > 0 &&
                             <Badge bg="success" className="custom-wishlist-badge" onClick={() => navigate(`/wishList/${userName}`)}>

@@ -49,19 +49,19 @@ function App() {
     <>
       <NavBar />
       <GameNavBar />
-      <Routes>
+      <Routes >
 
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<ProtectedRoute children={<Login />} allowedRoles={[null]} />} />
-        <Route path="/register" element={<ProtectedRoute children={<Register />} allowedRoles={[null]} />} />
-        <Route path="/wishList/:userName" element={<ProtectedRoute children={<WishListPage />} allowedRoles={["User", "Admin"]} />} />
-        <Route path="/cart/:userName" element={<ProtectedRoute children={<CartPage />} allowedRoles={["User", "Admin"]} />} />
-        <Route path="/library/:userName" element={<ProtectedRoute children={<LibraryPage />} allowedRoles={["User", "Admin"]} />} />
-        <Route path="/games" element={<GamesList />} />
-        <Route path="/game/:id" element={<DetailsPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<ProtectedRoute children={<Login />} allowedRoles={[null]} />} />
+          <Route path="/register" element={<ProtectedRoute children={<Register />} allowedRoles={[null]} />} />
+          <Route path="/wishList/:userName" element={<ProtectedRoute children={<WishListPage />} allowedRoles={["User", "Admin"]} />} />
+          <Route path="/cart/:userName" element={<ProtectedRoute children={<CartPage />} allowedRoles={["User", "Admin"]} />} />
+          <Route path="/library/:userName" element={<ProtectedRoute children={<LibraryPage />} allowedRoles={["User", "Admin"]} />} />
+          <Route path="/games" element={<GamesList />} />
+          <Route path="/game/:id" element={<DetailsPage />} />
 
-        <Route path="*" element={<HomePage />} />
-
+          <Route path="*" element={<HomePage />} />
+          
       </Routes>
       <Footer />
     </>

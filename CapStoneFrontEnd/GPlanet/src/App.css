@@ -8,6 +8,17 @@ body {
   background-color: #021813;
 }
 
+.navbar-custom {
+  position: fixed !important;
+  width: 100%;
+  top: 0%;
+  z-index: 1000 !important;
+}
+
+.margin-top-custom {
+  margin-top: 8em;
+}
+
 .background-main-green {
   background-color: #1a2328;
 }
@@ -352,4 +363,147 @@ body {
     font-size: 0.9rem !important;
     padding: 0.5rem 0.75rem !important;
   }
+}
+
+.margin-top-library {
+  margin-top: 6em;
+}
+
+.library-container {
+  display: flex !important;
+  height: 90.5vh !important;
+  background-color: #1b1b1b !important;
+  color: #fff !important;
+}
+
+.library-sidebar {
+  width: 280px !important;
+  background-color: #212529 !important;
+  padding-top: 1em;
+  border-right: 1px solid #333 !important;
+}
+
+.sidebar-title {
+  font-size: 1.2rem !important;
+  margin-bottom: 1rem !important;
+  color: #61dafb !important;
+}
+
+.game-list {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+.game-list li:hover {
+  background-color: #333;
+}
+
+.game-list::-webkit-scrollbar,
+main::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.game-list::-webkit-scrollbar-thumb,
+main::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.game-list::-webkit-scrollbar-thumb:hover,
+main::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.game-list::-webkit-scrollbar-track,
+main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.game-item {
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px !important;
+  gap: 10px !important;
+  border-radius: 4px !important;
+  transition: background 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.game-item:hover {
+  background-color: #2e353e !important;
+}
+
+.game-thumbnail {
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: cover !important;
+  border-radius: 4px !important;
+}
+
+.game-title {
+  flex: 1 !important;
+  font-size: 0.95rem !important;
+  color: #ddd !important;
+}
+
+.library-content {
+  flex: 1 !important;
+  padding: 2rem !important;
+  overflow-y: auto;
+}
+
+.toggle-icon-wrapper {
+  display: flex !important;
+  transition: transform 0.3s ease, opacity 0.3s ease !important;
+}
+
+.rotate-out {
+  transform: rotate(0deg) !important;
+  opacity: 1 !important;
+}
+
+.rotate-in {
+  transform: rotate(90deg) !important;
+  opacity: 0.7 !important;
+}
+
+.game-cover {
+  width: 14.5em;
+  height: 20em;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.game-cover:hover {
+  transform: scale(1.1);
+}
+
+.cover-details-library {
+  width: 100%;
+  height: 50%;
+}
+
+.game-details-container {
+  background-color: #1b1f25;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+.game-cover-section {
+  width: 100%;
+  height: 25em;
+  overflow: hidden;
+}
+
+.cover-details-library {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: 1px solid #444;
 }

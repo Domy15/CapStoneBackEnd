@@ -23,7 +23,7 @@ const NavBar = () => {
     }, [profile])
     
     return (
-        <Navbar className="background-green" data-bs-theme="dark">
+        <Navbar className="background-green navbar-custom" data-bs-theme="dark">
             <div className="d-flex mx-auto align-items-center" style={{ width: "95%" }}>
                 <Link to={"/"} className=" navbar-brand"><img src={logo} style={{ width: "3.5em" }} /></Link>
                 <Nav className="me-auto">

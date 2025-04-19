@@ -109,6 +109,20 @@ try
         RequestPath = "/assets/images"
     });
 
+    app.Use(async (context, next) =>
+    {
+        if (context.Request.Path.StartsWithSegments("/assets/images"))
+        {
+            context.Response.OnStarting(() =>
+            {
+                context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+                return Task.CompletedTask;
+            });
+        }
+
+        await next.Invoke();
+    });
+
     app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
     // Configure the HTTP request pipeline.

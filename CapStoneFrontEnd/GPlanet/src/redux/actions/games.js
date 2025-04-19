@@ -30,4 +30,4 @@ export const fetchGame = async (id) => {
         console.error(error);
         return { game: null, error: true };
     }
-}
+};

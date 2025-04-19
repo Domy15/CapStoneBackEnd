@@ -66,7 +66,7 @@ export const SetToken = () => {
             },
         });
     }
-}
+};
 
 export const Logout = () => {
     return async (dispatch) => {
@@ -75,7 +75,7 @@ export const Logout = () => {
             type: "LOGOUT",
         });
     }
-}
+};
 
 export const AutoLogin = () => {
     return async (dispatch) => {
@@ -108,4 +108,4 @@ export const AutoLogin = () => {
             }
         }
     }
-}
+};

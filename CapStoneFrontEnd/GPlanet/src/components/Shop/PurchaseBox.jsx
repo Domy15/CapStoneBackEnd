@@ -96,7 +96,7 @@ const PurchaseBox = ({ game }) => {
         }
     }
 
-    const AddToLibrary = async () => {
+    const addToLibrary = async () => {
         const getToken = JSON.parse(localStorage.getItem("token"));
         try {
             const response = await fetch(`https://localhost:7227/api/Library/${userName}`, {
@@ -165,7 +165,7 @@ const PurchaseBox = ({ game }) => {
                 <p className='text-white m-0'>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</p>
 
                 {game.price === 0 && !isThereLibrary ? (
-                    <Button variant={"success"} onClick={AddToLibrary}>
+                    <Button variant={"success"} onClick={addToLibrary}>
                         Aggiungi alla libreria
                     </Button>
                 ) : isThereLibrary ? (

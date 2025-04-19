@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import { Badge, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SingleCardGame = ({ game }) => {
     const update = useSelector(state => state.update);
     const { userName } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isThereCart, setIsThereCart] = useState(false);
     const [isThereLibrary, setIsThereLibrary] = useState(false);
 
@@ -131,18 +132,20 @@ const SingleCardGame = ({ game }) => {
     return (
         <div className="d-flex flex-column flex-md-row bg-dark text-white p-3 rounded shadow-sm game-card my-3">
             <img
-                src={game.coverLarge}
+                onClick={() => navigate(`/game/${game.id}`)}
+                src={game.coverLarge.startsWith("http") ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
                 alt={game.title}
                 className="me-md-3 mb-3 mb-md-0 align-self-center"
                 style={{
                     width: "100%",
                     maxWidth: "25em",
                     height: "auto",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
+                    cursor: "pointer"
                 }}
             />
             <div className="w-100">
-                <h2 className="fs-md-2">{game.title}</h2>
+                <h2 className="fs-md-2" style={{ cursor: "pointer" }} onClick={() => navigate(`/game/${game.id}`)}>{game.title}</h2>
 
                 <div className="d-flex flex-column flex-md-row justify-content-between mt-3 mt-md-5 gap-4">
                     <div>

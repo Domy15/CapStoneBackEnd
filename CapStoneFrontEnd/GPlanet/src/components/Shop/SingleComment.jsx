@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Pencil, TrashFill, XLg } from "react-bootstrap-icons";
+import { deleteComment, updateComment } from "../../redux/actions/comments";
 
 const SingleComment = ({ comment }) => {
     const dispatch = useDispatch();
@@ -10,44 +11,25 @@ const SingleComment = ({ comment }) => {
 
     const isOwnerOrAdmin = currentUser.userName === comment.userName || currentUser.role === "Admin";
 
-    const updateComment = async () => {
-        const token = JSON.parse(localStorage.getItem("token"));
+    const HandleUpdateComment = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Comment/${comment.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token.token}`
-                },
-                body: JSON.stringify(editedContent)
-            });
-            if (response.ok) {
-                setIsEditing(false);
-                dispatch({ type: "UPDATE" });
-            } else {
-                throw new Error("Errore nella modifica del commento!");
+            if (!editedContent?.trim()) {
+                return;
             }
+            await updateComment(comment, editedContent);
+            setIsEditing(false);
+            dispatch({ type: "UPDATE" });
         }
         catch (error) {
             console.log(error);
         }
     };
 
-    const deleteComment = async () => {
-        const token = JSON.parse(localStorage.getItem("token"));
+    const HandleDeleteComment = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Comment/${comment.id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token.token}`
-                }
-            });
-            if (response.ok) {
-                setIsEditing(false);
-                dispatch({ type: "UPDATE" });
-            } else {
-                throw new Error("Errore nell'eliminazione del commento!");
-            }
+            await deleteComment(comment);
+            setIsEditing(false);
+            dispatch({ type: "UPDATE" });
         }
         catch (error) {
             console.log(error);
@@ -71,7 +53,7 @@ const SingleComment = ({ comment }) => {
                         <TrashFill
                             role="button"
                             className="text-light"
-                            onClick={deleteComment}
+                            onClick={HandleDeleteComment}
                             title="Elimina commento"
                         />
                         <XLg
@@ -92,7 +74,7 @@ const SingleComment = ({ comment }) => {
                         className="form-control bg-dark text-white mb-2"
                         rows={3}
                     />
-                    <button className="btn btn-success btn-sm" onClick={updateComment}>
+                    <button className="btn btn-success btn-sm" onClick={HandleUpdateComment}>
                         Salva
                     </button>
                 </>

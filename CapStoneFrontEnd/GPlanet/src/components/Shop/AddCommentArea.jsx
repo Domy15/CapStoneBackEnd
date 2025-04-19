@@ -2,33 +2,21 @@ import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addComment } from "../../redux/actions/comments";
 
 const AddCommentArea = ({ userName }) => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [comment, setComment] = useState("");
 
-    const addComment = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
+    const handleAddComment = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Comment`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken.token}`
-                },
-                body: JSON.stringify({
-                    content: comment,
-                    userName: userName,
-                    idGame: id
-                })
-            });
-            if (response.ok) {
-                dispatch({ type: "UPDATE" });
-                setComment("");
-            } else {
-                throw new Error("Errore nell'aggiunta del commento!");
+            if (!comment?.trim()) {
+                return;
             }
+            await addComment(comment, userName, id);
+            dispatch({ type: "UPDATE" });
+            setComment("");
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +35,7 @@ const AddCommentArea = ({ userName }) => {
                 className="mb-3 bg-transparent text-white custom-textarea"
             />
             <div className="bg-black custom-div-btn">
-                <button className="green-btn" onClick={addComment}>
+                <button className="green-btn" onClick={handleAddComment}>
                     Pubblica la recensione
                 </button>
             </div>

@@ -1,27 +1,18 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { removeFromCart } from "../../redux/actions/cart";
 
 const CartGameCard = ({ game }) => {
     const { userName } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const removeFromCart = async () => {
-        const token = JSON.parse(localStorage.getItem("token"));
+    const handleRemoveFromCart = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Cart/${userName}/${game.id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token.token}`
-                }
+            await removeFromCart(userName, game);
+            dispatch({
+                type: "UPDATE",
             });
-            if (response.ok) {
-                dispatch({
-                    type: "UPDATE",
-                });
-            } else {
-                throw new Error("Errore nella rimozione dei dati dal carrello!")
-            }
         }
         catch (error) {
             console.log(error);
@@ -48,7 +39,7 @@ const CartGameCard = ({ game }) => {
                 <div className="text-end">
                     <p className='m-0'>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</p>
                     <small className="text-secondary">
-                        <span role="button" className="text-decoration-underline" onClick={removeFromCart}>rimuovi</span>
+                        <span role="button" className="text-decoration-underline" onClick={handleRemoveFromCart}>rimuovi</span>
                     </small>
                 </div>
             </div>

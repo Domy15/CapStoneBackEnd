@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import SingleComment from "./SingleComment";
 import AddCommentArea from "./AddCommentArea";
+import { fetchLibrary } from "../../redux/actions/library";
+import { fetchComments } from "../../redux/actions/comments";
 
 const CommentSection = () => {
     const { id } = useParams();
@@ -14,38 +16,19 @@ const CommentSection = () => {
     const [comments, setComments] = useState([]);
     const [showAll, setShowAll] = useState(false);
 
-    const getLibrary = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
+    const checkLibrary = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Library/${userName}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setIsThereLibrary(data.library.some(g => g.id === id));
-            } else {
-                throw new Error("Errore nel recupero dei dati!");
-            }
+            const data = await fetchLibrary(userName);
+            setIsThereLibrary(data.library.some(g => g.id === id));
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
     const getComments = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Comment/getByGame/${id}`);
-            if (response.ok) {
-                const data = await response.json();
-                const sorted = data.comments.sort(
-                    (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
-                );
-                setComments(sorted);
-            } else {
-                throw new Error("Errore nel recupero dei dati!");
-            }
+            const data = await fetchComments(id);
+            setComments(data);
         } catch (error) {
             console.log(error);
         }
@@ -54,7 +37,7 @@ const CommentSection = () => {
     useEffect(() => {
         getComments();
         if (userName) {
-            getLibrary();
+            checkLibrary();
         }
     }, [userName, update]);
 

@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchWishlist, removeFromWishlist } from '../../redux/actions/wishlist';
+import { addToCart, fetchCart } from '../../redux/actions/cart';
+import { addToLibrary, fetchLibrary } from '../../redux/actions/library';
 
 const PurchaseBox = ({ game }) => {
     const update = useSelector(state => state.update);
@@ -11,63 +14,51 @@ const PurchaseBox = ({ game }) => {
     const [isThereLibrary, setIsThereLibrary] = useState(false);
     const [isThere, setIsThere] = useState(false);
 
-    const getWishlist = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
+    const loadWishlist = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/WishList/${userName}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setIsThere(data.wishList.some(g => g.id === game.id));
-            } else {
-                throw new Error("Errore nel recupero dei dati!");
-            }
+            const data = await fetchWishlist(userName);
+            setIsThere(data.some(g => g.id === game.id));
+        } catch (error) {
+            console.error(error);
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
+    };
 
-    const getCart = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
+    const loadCart = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Cart/${userName}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setIsThereCart(data.cart.some(g => g.id === game.id));
-            } else {
-                throw new Error("Errore nel recupero dei dati!");
-            }
+            const data = await fetchCart(userName);
+            setIsThereCart(data.cart.some(g => g.id === game.id));
+        } catch (error) {
+            console.error(error);
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
+    };
 
-    const addToCart = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
+    const handleAddToCart = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Cart/${userName}/${game.id}`, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response.ok) {
+            await addToCart(userName, game.id);
+            dispatch({ type: "UPDATE" });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const checkLibrary = async () => {
+        try {
+            const data = await fetchLibrary(userName);
+            setIsThereLibrary(data.library.some(g => g.id === game.id));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleAddToLibrary = async () => {
+        try {
+            await addToLibrary(userName, [game.id]);
+            if (isThere) {
+                handleRemoveFromWishlist();
+            } else {
                 dispatch({
                     type: "UPDATE",
                 });
-            } else {
-                throw new Error("Errore nell'aggiunta al carrello!")
             }
         }
         catch (error) {
@@ -75,86 +66,23 @@ const PurchaseBox = ({ game }) => {
         }
     }
 
-    const getLibrary = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
+    const handleRemoveFromWishlist = async () => {
         try {
-            const response = await fetch(`https://localhost:7227/api/Library/${userName}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setIsThereLibrary(data.library.some(g => g.id === game.id));
-            } else {
-                throw new Error("Errore nel recupero dei dati!");
-            }
+            await removeFromWishlist(userName, game.id);
+            dispatch({ type: "UPDATE" });
+        } catch (error) {
+            console.error(error);
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
-
-    const addToLibrary = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
-        try {
-            const response = await fetch(`https://localhost:7227/api/Library/${userName}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken.token}`
-                },
-                body: JSON.stringify([game.id])
-            });
-            if (response.ok) {
-                if (isThere) {
-                    removeFromWishList();
-                } else {
-                    dispatch({
-                        type: "UPDATE",
-                    });
-                }
-            } else {
-                throw new Error("Errore nell'aggiunta alla libreria!")
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
-
-    const removeFromWishList = async () => {
-        const getToken = JSON.parse(localStorage.getItem("token"));
-        try {
-            const response = await fetch(`https://localhost:7227/api/WishList/${userName}/${game.id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken.token}`,
-                }
-            });
-            if (response) {
-                dispatch({
-                    type: "UPDATE",
-                });
-            } else {
-                throw new Error("Errore nella rimozione del gioco dalla lista desideri!");
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
+    };
 
     useEffect(() => {
         if (userName && game?.id) {
             setIsThere(false);
             setIsThereCart(false);
             setIsThereLibrary(false);
-            getWishlist();
-            getCart();
-            getLibrary();
+            loadWishlist();
+            loadCart();
+            checkLibrary();
         }
     }, [update, game?.id])
     return (
@@ -165,7 +93,7 @@ const PurchaseBox = ({ game }) => {
                 <p className='text-white m-0'>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</p>
 
                 {game.price === 0 && !isThereLibrary ? (
-                    <Button variant={"success"} onClick={addToLibrary}>
+                    <Button variant={"success"} onClick={handleAddToLibrary}>
                         Aggiungi alla libreria
                     </Button>
                 ) : isThereLibrary ? (
@@ -177,7 +105,7 @@ const PurchaseBox = ({ game }) => {
                         Nel Carrello
                     </Button>
                 ) : (
-                    <Button variant={"success"} onClick={addToCart}>
+                    <Button variant={"success"} onClick={handleAddToCart}>
                         Aggiungi al carrello
                     </Button>
                 )}

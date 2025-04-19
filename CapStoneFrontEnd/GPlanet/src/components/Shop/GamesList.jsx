@@ -1,39 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// src/components/GamesList.js
 import { useEffect, useState } from "react";
 import { Container, Form, Spinner } from "react-bootstrap";
 import { XLg } from "react-bootstrap-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomRangeSlider from "./CustomRangeSlider";
 import GameTable from "./GameTable";
+import { fetchGames } from "../../redux/actions/games";
 
 const GamesList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const [allGames, setAllGames] = useState([]);
     const [games, setGames] = useState([]);
-
     const [sortOption, setSortOption] = useState("");
     const [maxPrice, setMaxPrice] = useState(150);
-
     const location = useLocation();
     const navigate = useNavigate();
     const category = location.state?.category;
     const search = location.state?.search;
-    const gamesURL = "https://localhost:7227/api/Game";
 
-    const fetchGames = async () => {
-        try {
-            const response = await fetch(gamesURL);
-            if (response.ok) {
-                const data = await response.json();
-                setAllGames(data.games || []);
-                setIsLoading(false);
-                setIsError(false);
-            } else {
-                throw new Error("Errore durante il fetch");
-            }
-        } catch (error) {
-            console.error(error);
+    const getGames = async () => {
+        setIsLoading(true);
+        const { games, error } = await fetchGames();
+
+        if (!error) {
+            setAllGames(games);
+            setIsLoading(false);
+            setIsError(false);
+        } else {
             setIsLoading(false);
             setIsError(true);
         }
@@ -74,10 +69,10 @@ const GamesList = () => {
         }
 
         setGames(filtered);
-    }
+    };
 
     useEffect(() => {
-        fetchGames();
+        getGames();
     }, []);
 
     useEffect(() => {

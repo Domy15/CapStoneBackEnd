@@ -3,7 +3,7 @@ import { Download } from "react-bootstrap-icons";
 import ColorThief from "colorthief";
 
 const GameDetailsLibrary = ({ game }) => {
-    const [bgColor, setBgColor] = useState("#1a1a1a");
+    const [gradientColor, setGradientColor] = useState(null);
     const imgRef = useRef();
 
     useEffect(() => {
@@ -11,12 +11,15 @@ const GameDetailsLibrary = ({ game }) => {
 
         if (!imgElement) return;
 
+        const rgbToRgba = (r, g, b, a) => `rgba(${r}, ${g}, ${b}, ${a})`;
+
         const handleImageLoad = () => {
             try {
                 const colorThief = new ColorThief();
                 const result = colorThief.getColor(imgElement);
                 if (result && result.length === 3) {
-                    setBgColor(`rgb(${result[0]}, ${result[1]}, ${result[2]})`);
+                    const rgba = rgbToRgba(result[0], result[1], result[2], 1);
+                    setGradientColor(rgba);
                 }
             } catch (err) {
                 console.error("Color extraction failed", err);
@@ -38,7 +41,7 @@ const GameDetailsLibrary = ({ game }) => {
     )}`;
 
     return (
-        <div className="game-details-container text-light" style={{ backgroundColor: bgColor, transition: "background-color 0.5s ease" }}>
+        <div className="game-details-container text-light" style={{ backgroundColor: "#212529" }}>
             <div className="game-cover-section">
                 <img
                     ref={imgRef}
@@ -49,7 +52,16 @@ const GameDetailsLibrary = ({ game }) => {
                 />
             </div>
 
-            <div className="p-4 bg-black">
+            <div
+                className="p-4"
+                style={{
+                    background: gradientColor
+                        ? `linear-gradient(to bottom, ${gradientColor}0%, ${gradientColor} 10%, #212529 100%)`
+                        : "#212529",
+                    transition: "background 0.5s ease",
+                    height: "10em"
+                }}
+            >
                 <div className="d-flex gap-3 align-items-center">
                     <button className="custom-button fs-6 d-flex align-items-center justify-content-center" style={{ width: "10em", height: "3em" }}>
                         <Download className="me-2" /> Installa

@@ -107,8 +107,12 @@ try
     app.UseStaticFiles(new StaticFileOptions
     {
         FileProvider = new PhysicalFileProvider(
-            Path.Combine(Directory.GetCurrentDirectory(), "assets", "images")),
-        RequestPath = "/assets/images"
+        Path.Combine(Directory.GetCurrentDirectory(), "assets", "images")),
+        RequestPath = "/assets/images",
+        OnPrepareResponse = ctx =>
+        {
+            ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+        }
     });
 
     app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

@@ -1,20 +1,59 @@
-import { Image } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
 import { Download } from "react-bootstrap-icons";
+import ColorThief from "colorthief";
 
 const GameDetailsLibrary = ({ game }) => {
-    return (
-        <div className="game-details-container text-light">
+    const [bgColor, setBgColor] = useState("#1a1a1a");
+    const imgRef = useRef();
 
+    useEffect(() => {
+        const imgElement = imgRef.current;
+
+        if (!imgElement) return;
+
+        const handleImageLoad = () => {
+            try {
+                const colorThief = new ColorThief();
+                const result = colorThief.getColor(imgElement);
+                if (result && result.length === 3) {
+                    setBgColor(`rgb(${result[0]}, ${result[1]}, ${result[2]})`);
+                }
+            } catch (err) {
+                console.error("Color extraction failed", err);
+            }
+        };
+
+        if (imgElement.complete) {
+            handleImageLoad();
+        } else {
+            imgElement.addEventListener("load", handleImageLoad);
+            return () => imgElement.removeEventListener("load", handleImageLoad);
+        }
+    }, [game.coverLarge]);
+
+    const imageSrc = `https://localhost:7227/api/ImageProxy?url=${encodeURIComponent(
+        game.coverLarge.startsWith("http")
+            ? game.coverLarge
+            : `https://localhost:7227/${game.coverLarge.replace(/\\/g, "/")}`
+    )}`;
+
+    return (
+        <div className="game-details-container text-light" style={{ backgroundColor: bgColor, transition: "background-color 0.5s ease" }}>
             <div className="game-cover-section">
-                <Image
-                    src={game.coverLarge.startsWith("http") ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
+                <img
+                    ref={imgRef}
+                    crossOrigin="anonymous"
+                    src={imageSrc}
                     className="cover-details-library"
+                    alt={`Cover di ${game.title}`}
                 />
             </div>
 
-            <div className="p-4 h-100">
+            <div className="p-4 bg-black">
                 <div className="d-flex gap-3 align-items-center">
-                    <button className="custom-button fs-6 d-flex align-items-center justify-content-center" style={{width: "10em", height: "3em"}}><Download className="me-2"/> Installa</button>
+                    <button className="custom-button fs-6 d-flex align-items-center justify-content-center" style={{ width: "10em", height: "3em" }}>
+                        <Download className="me-2" /> Installa
+                    </button>
                     <p className="text-white h2">Installa {game.title}</p>
                 </div>
             </div>

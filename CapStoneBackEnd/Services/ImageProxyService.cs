@@ -21,6 +21,7 @@ namespace CapStoneBackEnd.Services
             try
             {
                 var client = _httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0");
                 var response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)

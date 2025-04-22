@@ -507,3 +507,22 @@ main::-webkit-scrollbar-track {
   object-position: center;
   border-bottom: 1px solid #444;
 }
+
+.nav-library-container {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+  gap: 1.5em;
+  background-color: #28303B;
+  border-radius: 0.2em;
+}
+
+.nav-library-container a {
+  border-radius: 0.2em;
+}
+
+.nav-library-container a:hover {
+  background-color: #67707B;
+  opacity: 1 !important;
+}

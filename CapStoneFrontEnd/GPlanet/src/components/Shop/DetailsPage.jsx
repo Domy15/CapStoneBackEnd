@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// src/components/DetailsPage.js
 import { Container } from "react-bootstrap";
 import GameDetails from "./GameDetails";
 import ButtonsWishlistDetails from "./ButtonsWishlistDetails";
@@ -42,6 +41,15 @@ const DetailsPage = () => {
         getGame();
     }, [id]);
 
+    useEffect(() => {
+        if (window.location.hash === "#comments") {
+            const commentSection = document.getElementById("comments");
+            if (commentSection) {
+                commentSection.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [loading, error]);
+
     return (
         <Container className="text-white mt-4">
             <GameDetails game={game} loading={loading} error={error} mainImage={mainImage} setMainImage={setMainImage} />
@@ -52,7 +60,9 @@ const DetailsPage = () => {
                 <PurchaseBox game={game} />
             )}
             {!loading && !error && (
-                <CommentSection />
+                <div id="comments">
+                    <CommentSection />
+                </div>
             )}
         </Container>
     );

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Download } from "react-bootstrap-icons";
 import ColorThief from "colorthief";
+import { Link } from "react-router-dom";
 
-const GameDetailsLibrary = ({ game }) => {
+const GameDetailsLibrary = ({ game, setGame }) => {
     const [gradientColor, setGradientColor] = useState(null);
     const imgRef = useRef();
 
@@ -68,6 +69,11 @@ const GameDetailsLibrary = ({ game }) => {
                     </button>
                     <p className="text-white h2">Installa {game.title}</p>
                 </div>
+            </div>
+            <div className="nav-library-container p-2">
+                <Link to={`/game/${game.id}`} className="text-white text-decoration-none p-2 opacity-50">Pagina del negozio</Link>
+                <Link to={`/game/${game.id}#comments`} className="text-white text-decoration-none p-2 opacity-50">Aggiungi una review</Link>
+                <Link className="text-white text-decoration-none p-2 opacity-50" onClick={() => setGame(null)}>Torna alla lista</Link>
             </div>
         </div>
     );

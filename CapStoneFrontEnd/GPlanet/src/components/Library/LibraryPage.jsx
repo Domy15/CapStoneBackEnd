@@ -41,7 +41,7 @@ const LibraryPage = () => {
                         )}
                     </Row>
                 </main>) : (
-                <GameDetailsLibrary game={selectedGame} />
+                <GameDetailsLibrary game={selectedGame} setGame={setSelectedGame} />
             )}
         </div>
     );

@@ -5,7 +5,7 @@ const SideBarLibrary = ({ library, setSelectedGame }) => {
     const [show, setShow] = useState(true);
 
     return (
-        <aside className="library-sidebar">
+        <aside className="library-sidebar d-sm-none d-xl-block">
             <h5 className="sidebar-title d-flex align-items-center">
                 {show
                     ? <Dash className="me-2" style={{ cursor: "pointer" }} onClick={() => setShow(false)} />

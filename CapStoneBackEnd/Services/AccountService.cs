@@ -131,6 +131,7 @@ namespace CapStoneBackEnd.Services
                     FirstName = profile.FirstName,
                     LastName = profile.LastName,
                     UserName = profile.UserName,
+                    Email = profile.Email,
                     ImageProfile = profile.ImageProfile,
                     Phone = profile.PhoneNumber,
                     BirthDate= profile.BirthDate 

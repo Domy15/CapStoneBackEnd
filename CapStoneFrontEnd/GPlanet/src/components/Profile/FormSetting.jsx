@@ -4,8 +4,10 @@ import { Button, Col, Form } from "react-bootstrap";
 const FormSetting = ({ profile }) => {
     const [profileChanges, setProfileChanges] = useState({
         userName: profile.userName,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
         email: profile.email,
-        phoneNumber: profile.phoneNumber
+        phoneNumber: profile.phone
     });
 
     const handleChange = (field, value) => {
@@ -14,7 +16,12 @@ const FormSetting = ({ profile }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Submit changes", profileChanges);
+        try {
+            const response = "fetch";
+        }
+        catch (error){
+            console.log(error);
+        }
     };
 
     return (
@@ -29,6 +36,26 @@ const FormSetting = ({ profile }) => {
                         type="text"
                         value={profileChanges.userName}
                         onChange={(e) => handleChange("userName", e.target.value)}
+                        className="bg-black text-white border-secondary form-control-custom"
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-4">
+                    <Form.Label className="text-uppercase text-secondary small">Nome vero</Form.Label>
+                    <Form.Control
+                        type="text"
+                        value={profileChanges.firstName}
+                        onChange={(e) => handleChange("firstName", e.target.value)}
+                        className="bg-black text-white border-secondary form-control-custom"
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-4">
+                    <Form.Label className="text-uppercase text-secondary small">Cognome</Form.Label>
+                    <Form.Control
+                        type="text"
+                        value={profileChanges.lastName}
+                        onChange={(e) => handleChange("lastName", e.target.value)}
                         className="bg-black text-white border-secondary form-control-custom"
                     />
                 </Form.Group>

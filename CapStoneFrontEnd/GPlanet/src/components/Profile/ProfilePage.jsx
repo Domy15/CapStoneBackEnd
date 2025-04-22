@@ -7,11 +7,13 @@ import { fetchWishlist } from "../../redux/actions/wishlist";
 import { Person } from "react-bootstrap-icons";
 import ProfileSection from "./ProfileSection";
 import GameSectionProfile from "./GameSectionProfile";
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState(null);
     const [library, setLibrary] = useState([]);
     const [wishList, setWishList] = useState([]);
+    const update = useSelector(state => state.update);
 
     const checkLibrary = async (userName) => {
         try {
@@ -44,7 +46,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         fetchProfile();
-    }, [])
+    }, [update])
 
     return (
         <Container className="text-white py-4 margin-top-library vh-100 animated-gradient">

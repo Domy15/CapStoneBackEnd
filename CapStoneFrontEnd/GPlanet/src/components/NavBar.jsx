@@ -21,7 +21,7 @@ const NavBar = () => {
 
     useEffect(() => {
     }, [profile])
-    
+
     return (
         <Navbar className="background-green navbar-custom" data-bs-theme="dark">
             <div className="d-flex mx-auto align-items-center" style={{ width: "95%" }}>
@@ -29,7 +29,7 @@ const NavBar = () => {
                 <Nav className="me-auto">
                     <Link to={"/"} className={`fs-4 nav-link ${isVisible ? "active-link" : ""}`}>NEGOZIO</Link>
                     <Link to={profile?.userName ? `/library/${profile.userName}` : "/login"} className={`fs-4 nav-link ${location.pathname === `/library/${profile.userName}` ? "active-link" : ""}`}>LIBRERIA</Link>
-                    <Link to={profile?.userName ? "/profile" : "/login"} className={`nav-link fs-4 ${location.pathname === "/profile" || location.pathname === "/login" ? "active-link" : ""}`}> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
+                    <Link to={profile?.userName ? "/profile" : "/login"} className={`nav-link fs-4 ${location.pathname === "/profile" || location.pathname === "/login" || location.pathname === "/profile/settings" ? "active-link" : ""}`}> {profile.userName != null ? profile.userName.toUpperCase() : 'ACCOUNT'}</Link>
                 </Nav>
 
                 <NavDropdown title={<Person />} id="basic-nav-dropdown" className="ms-auto text-secondary fs-4" align="end">

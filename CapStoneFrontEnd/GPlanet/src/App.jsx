@@ -21,6 +21,7 @@ import WishListPage from './components/WishList/WishListPage';
 import CartPage from './components/Cart/CartPage';
 import LibraryPage from './components/Library/LibraryPage';
 import ProfilePage from './components/Profile/ProfilePage';
+import ProfileSettings from './components/Profile/ProfileSettings';
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
         <Route path="/cart/:userName" element={<ProtectedRoute children={<CartPage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/library/:userName" element={<ProtectedRoute children={<LibraryPage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/profile" element={<ProtectedRoute children={<ProfilePage />} allowedRoles={["User", "Admin"]} />} />
+        <Route path="/profile/settings" element={<ProtectedRoute children={<ProfileSettings />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/games" element={<GamesList />} />
         <Route path="/game/:id" element={<DetailsPage />} />
 

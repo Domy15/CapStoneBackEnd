@@ -121,3 +121,16 @@ export const getProfile = async () => {
   if (!response.ok) throw new Error("Errore nel recupero dei dati!");
   return await response.json();
 };
+
+const PfpURL = "https://localhost:7227/api/Account/updatePfP/";
+
+export const changePfp = async (form, userName) => {
+    const response = await fetch(PfpURL + userName, {
+        method: "POST",
+        headers: { 
+            Authorization: `Bearer ${getToken()}` 
+        },
+        body: form
+    });
+    if (!response.ok) throw new Error("Errore nel aggiornamento dei dati!");
+}

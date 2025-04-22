@@ -192,6 +192,25 @@ body {
   transform: scale(1.03);
 }
 
+.custom-button-secondary {
+  background: linear-gradient(90deg, #4e4e4e 0%, #2f3330 100%);
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 0.2em;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.custom-button-secondary:hover {
+  background: linear-gradient(90deg, #404240 0%, #242725 100%);
+  transform: scale(1.03);
+}
+
 .custom-button-whishlist {
   background-color: #1a472a !important;
   border-color: #1a472a !important;
@@ -366,7 +385,7 @@ body {
 }
 
 .margin-top-library {
-  margin-top: 6em;
+  margin-top: 6em !important;
 }
 
 .library-container {

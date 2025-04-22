@@ -1,6 +1,8 @@
 import { Col, Image, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSection = ({ profile }) => {
+    const navigate = useNavigate();
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -27,7 +29,7 @@ const ProfileSection = ({ profile }) => {
             <Col>
                 <h1 className="text-white">{profile.userName}</h1>
                 <p className="text-white">{profile.firstName} <small className="text-white opacity-75">{formatDate(profile.birthDate)}</small></p>
-                <button className="button-profile">Modifica profilo</button>
+                <button className="button-profile" onClick={() => navigate("/profile/settings")}>Modifica profilo</button>
             </Col>
         </Row>
     );

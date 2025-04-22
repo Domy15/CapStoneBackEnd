@@ -53,9 +53,9 @@ const FormSetting = ({ profile }) => {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" className="mt-3 px-4 button=custom-form">
+                <button  type="submit" className="mt-3 px-4 custom-button">
                     Salva
-                </Button>
+                </button>
             </Form>
         </Col>
     );

@@ -105,7 +105,11 @@ namespace CapStoneBackEnd.Services
                 }
 
                 existingUser.UserName = userUpdate.UserName;
+                existingUser.NormalizedUserName = userUpdate.UserName.ToUpper();
+                existingUser.FirstName = userUpdate.FirstName;
+                existingUser.LastName = userUpdate.LastName;
                 existingUser.Email = userUpdate.Email;
+                existingUser.NormalizedEmail = userUpdate.Email.ToUpper();
                 existingUser.PhoneNumber = userUpdate.PhoneNumber;
 
                 return (await SaveAsync(), "Informazioni del profilo aggiornate con successo");

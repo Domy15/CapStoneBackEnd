@@ -162,7 +162,45 @@ namespace CapStoneBackEnd.Controllers
                     return BadRequest(new { message });
                 }
 
-                return Ok(new { message });
+                // Trova l'utente aggiornato
+                var user = await _userManager.FindByNameAsync(UserName);
+                if (user == null) return NotFound(new { message = "Utente non trovato." });
+
+                var roles = await _userManager.GetRolesAsync(user);
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("email", user.Email),
+                    new Claim("username", user.UserName),
+                    new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                    new Claim("name", $"{user.FirstName} {user.LastName}")
+                };
+
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                    claims.Add(new Claim("role", role));
+                }
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecurityKey));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var expiry = DateTime.Now.AddMinutes(_jwtSettings.ExpiresInMinutes);
+
+                var token = new JwtSecurityToken(
+                    _jwtSettings.Issuer,
+                    _jwtSettings.Audience,
+                    claims,
+                    expires: expiry,
+                    signingCredentials: creds
+                );
+
+                string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                return Ok(new
+                {
+                    message = "Profilo aggiornato con successo",
+                    token = tokenString
+                });
             }
             catch (Exception ex)
             {

@@ -67,7 +67,7 @@ const Register = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center mt-5">
+        <div className="d-flex justify-content-center align-items-center margin-top-custom">
             <Form onSubmit={handleSubmit} className="background-grey p-4 rounded-4 shadow w-100" style={{ maxWidth: '400px' }}>
                 <h2 className="text-center text-light mb-4">Registrati</h2>
                 {!submit && <div className="text-center"><p className="text-danger">Username già in uso! Riprova con un altro.</p></div>}

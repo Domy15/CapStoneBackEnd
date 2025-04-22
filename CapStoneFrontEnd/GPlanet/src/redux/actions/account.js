@@ -106,7 +106,10 @@ export const AutoLogin = () => {
       } catch (error) {
         console.error("Errore nel decodificare il token", error);
         localStorage.removeItem("token");
+        dispatch({ type: "LOGOUT" });
       }
+    } else {
+      dispatch({ type: "LOGOUT" });
     }
   };
 };
@@ -125,12 +128,12 @@ export const getProfile = async () => {
 const PfpURL = "https://localhost:7227/api/Account/updatePfP/";
 
 export const changePfp = async (form, userName) => {
-    const response = await fetch(PfpURL + userName, {
-        method: "POST",
-        headers: { 
-            Authorization: `Bearer ${getToken()}` 
-        },
-        body: form
-    });
-    if (!response.ok) throw new Error("Errore nel aggiornamento dei dati!");
-}
+  const response = await fetch(PfpURL + userName, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: form,
+  });
+  if (!response.ok) throw new Error("Errore nel aggiornamento dei dati!");
+};

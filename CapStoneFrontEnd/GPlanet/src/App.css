@@ -533,7 +533,7 @@ main::-webkit-scrollbar-track {
   margin: auto;
   width: 90%;
   gap: 1.5em;
-  background-color: #28303B;
+  background-color: #28303b;
   border-radius: 0.2em;
 }
 
@@ -542,7 +542,7 @@ main::-webkit-scrollbar-track {
 }
 
 .nav-library-container a:hover {
-  background-color: #67707B;
+  background-color: #67707b;
   opacity: 1 !important;
 }
 
@@ -555,4 +555,20 @@ main::-webkit-scrollbar-track {
 
 .button-profile:hover {
   background-color: rgb(20, 82, 82);
+}
+
+.form-control-custom:focus {
+  border-color: #1a9fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(26, 159, 255, 0.25) !important;
+}
+
+.button-custom-form {
+  background-color: #1a9fff;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.button-custom-form:hover {
+  background-color: #1486cc;
 }

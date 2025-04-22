@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";
 import { getProfile } from "../../redux/actions/account";
+import FormSetting from "./FormSetting";
 
 const ProfileSettings = () => {
     const [nav, setNav] = useState(1);
@@ -35,7 +36,7 @@ const ProfileSettings = () => {
                         <li className={`mb-2 text-white p-1 rounded ${nav === 2 ? "bg-secondary" : "opacity-50"}`} onClick={() => setNav(2)} style={{ cursor: "pointer" }}>Avatar</li>
                     </ul>
                 </Col>
-
+                {nav === 1 && profile && <FormSetting profile={profile} />}
                 {nav === 2 && profile && <AvatarSetting profile={profile} />}
             </Row>
         </Container>

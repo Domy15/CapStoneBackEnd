@@ -22,7 +22,7 @@ import CartPage from './components/Cart/CartPage';
 import LibraryPage from './components/Library/LibraryPage';
 import ProfilePage from './components/Profile/ProfilePage';
 import ProfileSettings from './components/Profile/ProfileSettings';
-import { ToastContainer } from 'react-toastify';
+import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -39,6 +39,8 @@ function App() {
     const path = location.pathname;
 
     let pageTitle;
+
+    if (!userName && !selectedGame) return;
 
     switch (true) {
       case path === "/":
@@ -66,9 +68,7 @@ function App() {
         break;
 
       case /^\/game\/\w+/.test(path):
-        pageTitle = selectedGame
-          ? `${selectedGame} :: G-PLANET`
-          : "Dettagli gioco :: G-PLANET";
+        pageTitle = `${selectedGame} :: G-PLANET`
         break;
 
       case /^\/library\/\w+/.test(path):
@@ -115,10 +115,11 @@ function App() {
         position="bottom-right"
         autoClose={3000}
         hideProgressBar={true}
-        newestOnTop={true}
+        newestOnTop={false}
         closeOnClick
         pauseOnHover
         draggable
+        transition={Bounce}
         theme="dark"
       />
       <Footer />

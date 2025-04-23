@@ -5,6 +5,7 @@ import { CheckSquare } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addToWishList, fetchWishlist, removeFromWishlist } from "../../redux/actions/wishlist";
+import { toast } from "react-toastify";
 
 const ButtonsWishlistDetails = () => {
     const update = useSelector(state => state.update);
@@ -29,8 +30,10 @@ const ButtonsWishlistDetails = () => {
             dispatch({
                 type: "UPDATE",
             });
+            toast.success("Gioco aggiunto alla lista desideri!");
         } catch (error) {
             console.log(error);
+            toast.error("Errore durante l'aggiunta del gioco dalla lista desideri!");
         }
     };
 
@@ -40,8 +43,10 @@ const ButtonsWishlistDetails = () => {
             dispatch({
                 type: "UPDATE",
             });
+            toast.info("Gioco rimosso alla lista desideri!");
         } catch (error) {
             console.log(error);
+            toast.error("Errore durante la rimozione del gioco dalla lista desideri!");
         }
     };
 

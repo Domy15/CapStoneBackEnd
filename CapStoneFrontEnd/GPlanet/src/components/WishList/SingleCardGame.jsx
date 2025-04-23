@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { addToCart, fetchCart } from "../../redux/actions/cart";
 import { addToLibrary, fetchLibrary } from "../../redux/actions/library";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
+import { toast } from "react-toastify";
 
 const SingleCardGame = ({ game }) => {
     const update = useSelector(state => state.update);
@@ -37,8 +38,10 @@ const SingleCardGame = ({ game }) => {
         try {
             await addToCart(userName, game.id);
             dispatch({ type: "UPDATE" });
+            toast.success("Gioco aggiunto al carrello!");
         } catch (error) {
             console.error(error);
+            toast.error("Errore durante l'aggiunta al carrello!");
         }
     };
 
@@ -46,8 +49,10 @@ const SingleCardGame = ({ game }) => {
         try {
             await addToLibrary(userName, [game.id]);
             dispatch({ type: "UPDATE" });
+            toast.success("Gioco aggiunto alla libreria!");
         } catch (error) {
             console.error(error);
+            toast.error("Errore durante l'aggiunta alla libreria!");
         }
     };
 
@@ -55,8 +60,10 @@ const SingleCardGame = ({ game }) => {
         try {
             await removeFromWishlist(userName, game.id);
             dispatch({ type: "UPDATE" });
+            toast.info("Gioco rimosso dalla lista desideri!");
         } catch (error) {
             console.error(error);
+            toast.error("Errore durante la rimozione dalla lista desideri!");
         }
     };
 

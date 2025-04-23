@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchWishlist, removeFromWishlist } from '../../redux/actions/wishlist';
 import { addToCart, fetchCart } from '../../redux/actions/cart';
 import { addToLibrary, fetchLibrary } from '../../redux/actions/library';
+import { toast } from 'react-toastify';
 
 const PurchaseBox = ({ game }) => {
     const update = useSelector(state => state.update);
@@ -36,8 +37,10 @@ const PurchaseBox = ({ game }) => {
         try {
             await addToCart(userName, game.id);
             dispatch({ type: "UPDATE" });
+            toast.success("Gioco aggiunto al carrello!");
         } catch (error) {
             console.error(error);
+            toast.error("Errore durante l'aggiunta al carrello");
         }
     };
 
@@ -53,6 +56,7 @@ const PurchaseBox = ({ game }) => {
     const handleAddToLibrary = async () => {
         try {
             await addToLibrary(userName, [game.id]);
+            toast.success("Gioco aggiunto alla libreria!");
             if (isThere) {
                 handleRemoveFromWishlist();
             } else {
@@ -63,6 +67,7 @@ const PurchaseBox = ({ game }) => {
         }
         catch (error) {
             console.log(error);
+            toast.error("Errore durante l'aggiunta alla libreria");
         }
     }
 

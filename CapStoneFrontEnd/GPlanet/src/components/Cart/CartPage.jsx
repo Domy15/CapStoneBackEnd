@@ -7,6 +7,7 @@ import CartGameCard from "./CartGameCard";
 import { addToLibrary } from "../../redux/actions/library";
 import { fetchWishlist, removeFromWishlist } from "../../redux/actions/wishlist";
 import { clearCart, fetchCart } from "../../redux/actions/cart";
+import { toast } from "react-toastify";
 
 const CartPage = () => {
     const { userName } = useParams();
@@ -27,8 +28,12 @@ const CartPage = () => {
             await Promise.all(removalPromises);
             await clearCart(userName);
             dispatch({ type: "UPDATE" });
+            const message = cart.length > 1 ? "Giochi aggunti" : "Gioco aggiunto";
+            toast.success(`${message} alla libreria!`);
         } catch (error) {
             console.error(error);
+            const messageError = cart.length > 1 ? "dei giochi" : "del gioco";
+            toast.error(`Errore durante l'acquisto ${messageError}`);
         }
     };
 

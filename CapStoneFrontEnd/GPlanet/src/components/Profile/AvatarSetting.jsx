@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, Row } from "react-bootstrap";
 import { changePfp } from "../../redux/actions/account";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const AvatarSetting = ({ profile }) => {
     const [file, setFile] = useState(null);
@@ -16,25 +17,33 @@ const AvatarSetting = ({ profile }) => {
 
     const updateProfile = async () => {
         if (!file) return;
+
         setIsLoading(true);
-        try {
-            const formData = new FormData();
-            formData.append("imageFile", file);
-            await changePfp(formData, profile.userName);
-            setPreviewUrl(null);
-            setFile(null);
-            fileInputRef.current.value = null;
-            dispatch({
-                type: "UPDATE",
+
+        const formData = new FormData();
+        formData.append("imageFile", file);
+
+        toast.promise(
+            changePfp(formData, profile.userName),
+            {
+                pending: "Caricamento avatar...",
+                success: "Avatar aggiornato con successo! 🎉",
+                error: "Errore durante il caricamento 😢",
+            }
+        )
+            .then(() => {
+                setPreviewUrl(null);
+                setFile(null);
+                fileInputRef.current.value = null;
+                dispatch({ type: "UPDATE" });
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-        }
-        catch (error) {
-            console.log(error);
-        }
-        finally {
-            setIsLoading(false);
-        }
-    }
+    };
 
     useEffect(() => {
         if (!file) return;

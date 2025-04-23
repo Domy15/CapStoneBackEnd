@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { removeFromCart } from "../../redux/actions/cart";
+import { toast } from "react-toastify";
 
 const CartGameCard = ({ game }) => {
     const { userName } = useParams();
@@ -13,9 +14,11 @@ const CartGameCard = ({ game }) => {
             dispatch({
                 type: "UPDATE",
             });
+            toast.info("Gioco rimosso dal carrello!");
         }
         catch (error) {
             console.log(error);
+            toast.error("Errore durante la rimozione dal carrello!");
         }
     }
 

@@ -64,6 +64,12 @@ const GamesList = () => {
             case "low":
                 filtered.sort((a, b) => a.price - b.price);
                 break;
+            case "A":
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+            case "Z":
+                filtered.sort((a, b) => b.title.localeCompare(a.title));
+                break;
             default:
                 break;
         }
@@ -112,6 +118,8 @@ const GamesList = () => {
                     onChange={(e) => setSortOption(e.target.value)}
                     style={{ backgroundColor: "#0B2A23", color: "white", border: "1px solid #198754" }}>
                     <option className="text-white" value="">Filtra per...</option>
+                    <option className="text-white" value="A">A-Z</option>
+                    <option className="text-white" value="Z">Z-A</option>
                     <option className="text-white" value="asc">Data di rilascio (crescente)</option>
                     <option className="text-white" value="desc">Data di rilascio (decrescente)</option>
                     <option className="text-white" value="high">Prezzo più alto</option>

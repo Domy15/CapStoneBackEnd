@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import PurchaseBox from "./PurchaseBox";
 import CommentSection from "./CommentSection";
 import { fetchGame } from "../../redux/actions/games";
+import { useDispatch } from "react-redux";
 
 const DetailsPage = () => {
     const { id } = useParams();
@@ -14,6 +15,7 @@ const DetailsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [mainImage, setMainImage] = useState("");
+    const dispatch = useDispatch();
 
     const getMainImage = (coverLarge) => {
         return coverLarge.startsWith("http")
@@ -26,6 +28,10 @@ const DetailsPage = () => {
         const { game, error } = await fetchGame(id);
 
         if (!error) {
+            dispatch({
+                type: "SELECT_GAME",
+                payload: game.title
+            })
             setGame(game);
             const image = getMainImage(game.coverLarge);
             setMainImage(image);

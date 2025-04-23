@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { LoginAccount, SetToken } from "../../redux/actions/account";
 import { FloatingLabel, Form, InputGroup } from "react-bootstrap";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [form, setForm] = useState({
@@ -23,9 +24,11 @@ const Login = () => {
         if (response) {
             setIsCorrect(true);
             navigate("/");
+            toast.success(`Benvenuto ${form.userName}`);
         }
         else {
             setIsCorrect(false);
+            toast.error("Credenziali errate!");
         }
     };
 

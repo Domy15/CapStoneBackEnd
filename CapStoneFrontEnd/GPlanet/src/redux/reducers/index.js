@@ -9,6 +9,7 @@ const initialState = {
   },
   update: false,
   loading: true,
+  selectedGame: null
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -39,6 +40,12 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         update: !state.update,
       };
+
+    case "SELECT_GAME":
+      return {
+        ...state,
+        selectedGame: action.payload,
+      }
 
     default:
       return state;

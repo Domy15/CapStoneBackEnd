@@ -5,7 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { Route, Routes, useLocation } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AutoLogin } from './redux/actions/account';
 import Login from './components/Account/Login';
 import Register from './components/Account/Register';
@@ -22,10 +22,14 @@ import CartPage from './components/Cart/CartPage';
 import LibraryPage from './components/Library/LibraryPage';
 import ProfilePage from './components/Profile/ProfilePage';
 import ProfileSettings from './components/Profile/ProfileSettings';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const userName = useSelector(state => state.profile.userName);
+  const selectedGame = useSelector(state => state.selectedGame);
 
   useEffect(() => {
     dispatch(AutoLogin());
@@ -34,18 +38,58 @@ function App() {
   useEffect(() => {
     const path = location.pathname;
 
-    let pageTitle = "G-PLANET";
+    let pageTitle;
 
-    if (path === "/") {
-      pageTitle = "Benvenuto su G-PLANET";
-    } else if (path === "/login") {
-      pageTitle = "Accedi";
-    } else if (path.startsWith("/register")) {
-      pageTitle = "Registrati";
+    switch (true) {
+      case path === "/":
+        pageTitle = "Benvenuto su G-PLANET";
+        break;
+
+      case path === "/login":
+        pageTitle = "Accedi";
+        break;
+
+      case path === "/register":
+        pageTitle = "Registrati";
+        break;
+
+      case path === "/profile":
+        pageTitle = `Profilo :: ${userName.toUpperCase()}`;
+        break;
+
+      case path === "/profile/settings":
+        pageTitle = `Impostazione profilo :: ${userName.toUpperCase()}`;
+        break;
+
+      case path === "/games":
+        pageTitle = "Cerca su G-PLANET";
+        break;
+
+      case /^\/game\/\w+/.test(path):
+        pageTitle = selectedGame
+          ? `${selectedGame} :: G-PLANET`
+          : "Dettagli gioco :: G-PLANET";
+        break;
+
+      case /^\/library\/\w+/.test(path):
+        pageTitle = `Libreria di ${userName.toUpperCase()}`;
+        break;
+
+      case /^\/wishList\/\w+/.test(path):
+        pageTitle = `Lista desideri di ${userName.toUpperCase()}`;
+        break;
+
+      case /^\/cart\/\w+/.test(path):
+        pageTitle = `Carrello di ${userName.toUpperCase()}`;
+        break;
+
+      default:
+        pageTitle = "G-PLANET";
+        break;
     }
 
     document.title = pageTitle;
-  }, [location]);
+  }, [location, userName, selectedGame]);
 
   return (
     <>
@@ -67,9 +111,19 @@ function App() {
         <Route path="*" element={<HomePage />} />
 
       </Routes>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="dark"
+      />
       <Footer />
     </>
   )
 }
 
-export default App
+export default App;

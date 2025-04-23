@@ -163,7 +163,7 @@ namespace CapStoneBackEnd.Controllers
                 }
 
                 // Trova l'utente aggiornato
-                var user = await _userManager.FindByNameAsync(UserName);
+                var user = await _userManager.FindByNameAsync(userUpdate.UserName);
                 if (user == null) return NotFound(new { message = "Utente non trovato." });
 
                 var roles = await _userManager.GetRolesAsync(user);

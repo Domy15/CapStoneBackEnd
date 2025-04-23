@@ -12,14 +12,15 @@ export const RegisterAccount = async (form) => {
       },
       body: JSON.stringify(form),
     });
+    const data = await response.json();
     if (!response.ok) {
-      return null;
+      return { success: false, message: data.message };
     } else {
-      return await response.json();
+      return { success: true, data };
     }
   } catch (error) {
     console.error("Error:", error);
-    return null;
+    return { success: false, message: "Errore di rete o server" };
   }
 };
 
@@ -136,4 +137,24 @@ export const changePfp = async (form, userName) => {
     body: form,
   });
   if (!response.ok) throw new Error("Errore nel aggiornamento dei dati!");
+};
+
+const updateProfileURL = "https://localhost:7227/api/Account/UpdateProfile/";
+
+export const updateProfile = async (userName, body) => {
+  const response = await fetch(updateProfileURL + userName, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    return false;
+  } else {
+    const data = await response.json();
+    localStorage.setItem("token", JSON.stringify({ token: data.token }));
+    return true;
+  }
 };

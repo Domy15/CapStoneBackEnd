@@ -3,6 +3,7 @@ import { FloatingLabel, Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterAccount } from "../../redux/actions/account";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { toast } from "react-toastify";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -58,11 +59,13 @@ const Register = () => {
         if (!validate()) return;
 
         const response = await RegisterAccount(form);
-        if (response == null) {
+        if (!response.success) {
             setSubmit(false);
+            toast.error(response.message);
         } else {
             setSubmit(true);
             navigate("/login");
+            toast.success("Utente registrato con successo, è possibile effetturare l'accesso!");
         }
     };
 
@@ -70,7 +73,7 @@ const Register = () => {
         <div className="d-flex justify-content-center align-items-center margin-top-custom">
             <Form onSubmit={handleSubmit} className="background-grey p-4 rounded-4 shadow w-100" style={{ maxWidth: '400px' }}>
                 <h2 className="text-center text-light mb-4">Registrati</h2>
-                {!submit && <div className="text-center"><p className="text-danger">Username già in uso! Riprova con un altro.</p></div>}
+                {!submit && <div className="text-center"><p className="text-danger">Errore nella registrazione!</p></div>}
                 <FloatingLabel label="Nome" className="mb-3 text-dark">
                     <Form.Control
                         type="text"

@@ -90,6 +90,11 @@ namespace CapStoneBackEnd.Services
         {
             try
             {
+                if (string.IsNullOrEmpty(Name))
+                {
+                    return (false, "Il campo nome non può essere vuoto!");
+                }
+
                 var existingCompany = await _context.Companies.FirstOrDefaultAsync(c => c.Id == id);
                 if (existingCompany == null) 
                 {

@@ -24,6 +24,7 @@ import ProfilePage from './components/Profile/ProfilePage';
 import ProfileSettings from './components/Profile/ProfileSettings';
 import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminPage from './components/Admin/AdminPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function App() {
 
     let pageTitle;
 
-    if (!userName && !selectedGame) return;
+
 
     switch (true) {
       case path === "/":
@@ -56,10 +57,12 @@ function App() {
         break;
 
       case path === "/profile":
+        if (!userName) return;
         pageTitle = `Profilo :: ${userName.toUpperCase()}`;
         break;
 
       case path === "/profile/settings":
+        if (!userName) return;
         pageTitle = `Impostazione profilo :: ${userName.toUpperCase()}`;
         break;
 
@@ -68,19 +71,28 @@ function App() {
         break;
 
       case /^\/game\/\w+/.test(path):
+        if (!selectedGame) return;
         pageTitle = `${selectedGame} :: G-PLANET`
         break;
 
       case /^\/library\/\w+/.test(path):
+        if (!userName) return;
         pageTitle = `Libreria di ${userName.toUpperCase()}`;
         break;
 
       case /^\/wishList\/\w+/.test(path):
+        if (!userName) return;
         pageTitle = `Lista desideri di ${userName.toUpperCase()}`;
         break;
 
       case /^\/cart\/\w+/.test(path):
+        if (!userName) return;
         pageTitle = `Carrello di ${userName.toUpperCase()}`;
+        break;
+
+      case path === "/admin":
+        if (!userName) return;
+        pageTitle = `Admin :: ${userName.toUpperCase()}`;
         break;
 
       default:
@@ -105,6 +117,7 @@ function App() {
         <Route path="/library/:userName" element={<ProtectedRoute children={<LibraryPage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/profile" element={<ProtectedRoute children={<ProfilePage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/profile/settings" element={<ProtectedRoute children={<ProfileSettings />} allowedRoles={["User", "Admin"]} />} />
+        <Route path="/admin" element={<ProtectedRoute children={<AdminPage />} allowedRoles={["Admin"]} />} />
         <Route path="/games" element={<GamesList />} />
         <Route path="/game/:id" element={<DetailsPage />} />
 

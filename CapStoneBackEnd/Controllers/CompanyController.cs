@@ -60,18 +60,18 @@ namespace CapStoneBackEnd.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompany(Guid id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] string name)
         {
             try
             {
-                var result = await _companyService.DeleteCompanyAsync(id);
+                var (result, message) = await _companyService.UpdateCompanyAsync(id, name);
                 if (!result)
                 {
-                    return BadRequest(new { message = "Ops qualcosa è andato storto!" });
+                    return BadRequest(new { message });
                 }
 
-                return Ok(new { message = "Compagnia eliminata con successo!" });
+                return Ok(new { message });
             }
             catch (Exception ex)
             {

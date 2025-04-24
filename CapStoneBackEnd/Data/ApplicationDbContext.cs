@@ -42,10 +42,10 @@ namespace CapStoneBackEnd.Data
             modelBuilder.Entity<Comment>().HasOne(c => c.VideoGame).WithMany(v => v.Comments).HasForeignKey(c => c.IdGame);
             modelBuilder.Entity<Comment>().HasOne(c => c.ApplicationUser).WithMany(u => u.Comments).HasForeignKey(c => c.IdUser);
 
-            modelBuilder.Entity<VideoGame>().HasOne(v => v.Company).WithMany(c => c.VideoGames).HasForeignKey(v => v.CompanyId);
+            modelBuilder.Entity<VideoGame>().HasOne(v => v.Company).WithMany(c => c.VideoGames).HasForeignKey(v => v.CompanyId).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<GameCategory>().HasOne(g => g.Category).WithMany(c => c.GameCategories).HasForeignKey(g => g.CategoryId);
-            modelBuilder.Entity<GameCategory>().HasOne(g => g.VideoGame).WithMany(v => v.GameCategories).HasForeignKey(g => g.GameId);
+            modelBuilder.Entity<GameCategory>().HasOne(g => g.Category).WithMany(c => c.GameCategories).HasForeignKey(g => g.CategoryId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<GameCategory>().HasOne(g => g.VideoGame).WithMany(v => v.GameCategories).HasForeignKey(g => g.GameId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Cart>().HasOne(c => c.VideoGame).WithMany(v => v.Carts).HasForeignKey(c => c.GameId);
             modelBuilder.Entity<Cart>().HasOne(c => c.ApplicationUser).WithMany(u => u.Carts).HasForeignKey(c => c.UserId);

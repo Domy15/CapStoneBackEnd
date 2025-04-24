@@ -86,23 +86,28 @@ namespace CapStoneBackEnd.Services
             }
         }
 
-        public async Task<bool> DeleteCompanyAsync(Guid id)
+        public async Task<(bool, string)> UpdateCompanyAsync(Guid id, string Name)
         {
             try
             {
                 var existingCompany = await _context.Companies.FirstOrDefaultAsync(c => c.Id == id);
                 if (existingCompany == null) 
                 {
-                    return false;
+                    return (false,"Azienda non trovata!");
                 }
 
-                _context.Companies.Remove(existingCompany);
+                var checkName = await _context.Companies.FirstOrDefaultAsync(c => c.Name == Name);
+                if (checkName != null) {
+                     return (false, "Nome dell'azienda già registrata!");
+                }
 
-                return await SaveAsync();
+                existingCompany.Name = Name;
+
+                return (await SaveAsync(), "Azienda aggiornata con successo!");
             }
             catch
             {
-                return false;
+                return (false, "Errore durante il recupero dei dati!");
             }
         }
     }

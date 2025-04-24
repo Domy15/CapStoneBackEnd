@@ -50,13 +50,13 @@ const FormSetting = ({ profile }) => {
         if (validateForm()) {
             try {
                 const response = await updateProfile(profile.userName, profileChanges);
-                if (response) {
+                if (response.success) {
                     dispatch(AutoLogin());
                     toast.success("Dati del profilo aggiornati!");
                     navigate("/profile");
                 } else {
                     console.log("Errore nell'aggiornamento dei dati!");
-                    toast.error("Errore nel salvataggio del profilo!");
+                    toast.error(`${response.message}!`);
                 }
             }
             catch (error) {

@@ -112,7 +112,9 @@ namespace CapStoneBackEnd.Services
                 existingUser.NormalizedEmail = userUpdate.Email.ToUpper();
                 existingUser.PhoneNumber = userUpdate.PhoneNumber;
 
-                return (await SaveAsync(), "Informazioni del profilo aggiornate con successo");
+                var response = await SaveAsync();
+
+                return (response, response ? "Informazioni del profilo aggiornate con successo" : "Errore nel salvataggio dei dati!");
             }
             catch
             {

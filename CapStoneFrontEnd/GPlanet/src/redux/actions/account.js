@@ -150,11 +150,11 @@ export const updateProfile = async (userName, body) => {
     },
     body: JSON.stringify(body),
   });
+  const data = await response.json();
   if (!response.ok) {
-    return false;
+    return { success: false, message: data.message };
   } else {
-    const data = await response.json();
     localStorage.setItem("token", JSON.stringify({ token: data.token }));
-    return true;
+    return { success: true, message: data.message };
   }
 };

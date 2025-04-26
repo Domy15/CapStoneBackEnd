@@ -1,4 +1,5 @@
-﻿using CapStoneBackEnd.Data;
+﻿using System.Globalization;
+using CapStoneBackEnd.Data;
 using CapStoneBackEnd.DTOs.Game;
 using CapStoneBackEnd.Models.VideoGames;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,19 @@ namespace CapStoneBackEnd.Services
                 return await _context.SaveChangesAsync() > 0;
             }
             catch
-            { 
+            {
                 return false;
             }
+        }
+
+        private decimal ParsePrice(string price)
+        {
+            if (string.IsNullOrWhiteSpace(price))
+                return 0;
+
+            price = price.Replace(',', '.');
+
+            return decimal.Parse(price, CultureInfo.InvariantCulture);
         }
 
         public async Task<GetGamesResponseDto?> GetAllGamesAsync()
@@ -33,7 +44,7 @@ namespace CapStoneBackEnd.Services
                 var games = await _context.VideoGames.Include(g => g.ExtraImages).Include(g => g.Company).Include(g => g.GameCategories).ThenInclude(gc => gc.Category).ToListAsync();
 
                 var gamesList = new GetGamesResponseDto()
-                { 
+                {
                     Games = games.Select(g => new GameDto
                     {
                         Id = g.Id,
@@ -48,7 +59,7 @@ namespace CapStoneBackEnd.Services
                         {
                             Name = gc.Category.Name
                         }).ToList(),
-                        ExtraImages = g.ExtraImages.Select(ei => new ExtraImageDto 
+                        ExtraImages = g.ExtraImages.Select(ei => new ExtraImageDto
                         {
                             Id = ei.Id,
                             Image = ei.Image
@@ -107,7 +118,7 @@ namespace CapStoneBackEnd.Services
         {
             try
             {
-                if(addGameDto == null)
+                if (addGameDto == null)
                 {
                     return false;
                 }
@@ -147,14 +158,14 @@ namespace CapStoneBackEnd.Services
                         await addGameDto.CoverLarge.CopyToAsync(stream);
                     }
 
-                    webPath = $"assets/images/{fileName}";
+                    webPathLarge = $"assets/images/{fileName}";
                 }
 
                 var newGame = new VideoGame()
                 {
                     Title = addGameDto.Title,
                     Description = addGameDto.Description,
-                    Price = addGameDto.Price,
+                    Price = ParsePrice(addGameDto.Price),
                     ReleaseDate = addGameDto.ReleaseDate,
                     Cover = webPath,
                     CoverLarge = webPathLarge,
@@ -192,14 +203,14 @@ namespace CapStoneBackEnd.Services
                 }
 
                 var game = await _context.VideoGames.FirstOrDefaultAsync(g => g.Id == id);
-                if (game == null) 
+                if (game == null)
                 {
                     return false;
                 }
 
-                if (updateGameDto.Cover != null && updateGameDto.Cover.Length > 0) 
+                if (updateGameDto.Cover != null && updateGameDto.Cover.Length > 0)
                 {
-                    if (!string.IsNullOrEmpty(game.Cover)) 
+                    if (!string.IsNullOrEmpty(game.Cover))
                     {
                         var relativePath = game.Cover.Replace("/", Path.DirectorySeparatorChar.ToString())
                                                             .Replace("\\", Path.DirectorySeparatorChar.ToString());
@@ -278,8 +289,8 @@ namespace CapStoneBackEnd.Services
             try
             {
                 var game = await _context.VideoGames.FirstOrDefaultAsync(g => g.Id == id);
-                if (game == null) 
-                { 
+                if (game == null)
+                {
                     return false;
                 }
 
@@ -287,7 +298,7 @@ namespace CapStoneBackEnd.Services
 
                 return await SaveAsync();
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -298,7 +309,7 @@ namespace CapStoneBackEnd.Services
             try
             {
                 var game = await _context.VideoGames.FirstOrDefaultAsync(g => g.Id == id);
-                if (game == null) 
+                if (game == null)
                 {
                     return false;
                 }
@@ -310,7 +321,7 @@ namespace CapStoneBackEnd.Services
 
                 foreach (var image in addExtraImageDto.ExtraImages)
                 {
-                    if (image != null && image.Length > 0) 
+                    if (image != null && image.Length > 0)
                     {
                         var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
                         var filePath = Path.Combine(imageDir, fileName);
@@ -354,8 +365,8 @@ namespace CapStoneBackEnd.Services
 
                 return await SaveAsync();
             }
-            catch 
-            { 
+            catch
+            {
                 return false;
             }
         }

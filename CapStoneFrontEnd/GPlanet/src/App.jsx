@@ -25,6 +25,7 @@ import ProfileSettings from './components/Profile/ProfileSettings';
 import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminPage from './components/Admin/AdminPage';
+import AddGame from './components/Admin/AddGame';
 
 function App() {
   const dispatch = useDispatch();
@@ -118,6 +119,7 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute children={<ProfilePage />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/profile/settings" element={<ProtectedRoute children={<ProfileSettings />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/admin" element={<ProtectedRoute children={<AdminPage />} allowedRoles={["Admin"]} />} />
+        <Route path="/admin/addGame" element={<ProtectedRoute children={<AddGame />} allowedRoles={["Admin"]} />} />
         <Route path="/games" element={<GamesList />} />
         <Route path="/game/:id" element={<DetailsPage />} />
 

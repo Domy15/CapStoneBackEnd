@@ -572,3 +572,43 @@ main::-webkit-scrollbar-track {
 .button-custom-form:hover {
   background-color: #1486cc;
 }
+
+.button-update,
+.button-delete {
+  background-color: #363c42 !important;
+  border: none !important;
+}
+
+.button-update:hover {
+  background-color: rgb(224, 166, 19) !important;
+}
+
+.button-delete:hover {
+  background-color: red !important;
+}
+
+table.table-custom,
+.table-custom thead,
+.table-custom tbody,
+.table-custom tr,
+.table-custom td,
+.table-custom th {
+  background-color: #212529 !important;
+  color: white !important;
+  border-color: #363c42 !important;
+}
+
+.custom-search-admin {
+  background-color: #0a101c !important;
+  border: none !important;
+  color: #fff !important;
+  padding: 0.5rem 0.75rem !important;
+  padding-right: 40px !important;
+  border-radius: 4px !important;
+  width: 100% !important;
+}
+
+.custom-search-admin::placeholder {
+  color: #bbb !important;
+  opacity: 1 !important;
+}

@@ -4,6 +4,7 @@ import { Badge, Button, Container, Form, FormControl, Nav, Navbar, Row } from "r
 import { Search } from "react-bootstrap-icons";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
+import { getCategories } from "../redux/actions/category";
 
 const GameNavBar = () => {
     const update = useSelector(state => state.update);
@@ -29,15 +30,11 @@ const GameNavBar = () => {
         }
     }
 
-    const getCategories = async () => {
+    const fetchCategories = async () => {
         try {
-            const response = await fetch("https://localhost:7227/api/Category")
-            if (response.ok) {
-                const data = await response.json()
-                setCategories(data.categories)
-            }
-            else {
-                throw new Error("Errore nel recupero dei dati!")
+            const response = await getCategories();
+            if (response) {
+                setCategories(response);
             }
         }
         catch (error) {
@@ -88,7 +85,7 @@ const GameNavBar = () => {
     }
 
     useEffect(() => {
-        getCategories();
+        fetchCategories();
     }, [])
 
     useEffect(() => {

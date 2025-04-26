@@ -13,7 +13,7 @@ const NavBar = () => {
     const location = useLocation()
     const isGameDetail = useMatch("/game/:id");
     const isVisible = ["/", "/games"].includes(location.pathname) || isGameDetail;
-    const isPath = location.pathname === "/profile" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/profile/settings";
+    const isPath = location.pathname.startsWith("/profile") || location.pathname === "/login" || location.pathname === "/register";
 
     const logoutAccount = () => {
         dispatch(Logout())

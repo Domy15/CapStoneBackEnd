@@ -3,12 +3,14 @@ import { Col, Form, FormControl } from "react-bootstrap";
 import { fetchGames } from "../../redux/actions/games";
 import { useNavigate } from "react-router-dom";
 import GamesTable from "./GamesTable";
+import { useSelector } from "react-redux";
 
 const GameSection = () => {
     const [games, setGames] = useState([]);
     const [sliceGame, setSliceGame] = useState(9);
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
+    const update = useSelector(state => state.update);
 
     const getGames = async () => {
         const { games, error } = await fetchGames();
@@ -24,7 +26,7 @@ const GameSection = () => {
 
     useEffect(() => {
         getGames();
-    }, [])
+    }, [update])
     return (
         <Col md={10}>
             <h2 className="text-white">Gestione Giochi</h2>

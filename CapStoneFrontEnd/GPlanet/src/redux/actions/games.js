@@ -45,3 +45,28 @@ export const addGame = async (form) => {
   if (!response.ok) return { success: false, message: data.message };
   return { success: true, message: data.message };
 };
+
+export const updateGame = async (id, form) => {
+  const response = await fetch(`${API_BASE}/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: form,
+  });
+  const data = await response.json();
+  if (!response.ok) return { success: false, message: data.message };
+  return { success: true, message: data.message };
+};
+
+export const deleteGame = async (id) => {
+  const response = await fetch(`${API_BASE}/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) return { success: false, message: data.message };
+  return { success: true, message: data.message };
+};

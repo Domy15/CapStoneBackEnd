@@ -202,10 +202,24 @@ namespace CapStoneBackEnd.Services
                     return false;
                 }
 
-                var game = await _context.VideoGames.FirstOrDefaultAsync(g => g.Id == id);
+                var game = await _context.VideoGames.Include(g => g.GameCategories).ThenInclude(gc => gc.Category).FirstOrDefaultAsync(g => g.Id == id);
                 if (game == null)
                 {
                     return false;
+                }
+
+                if (updateGameDto.Categories != null)
+                {
+                    game.GameCategories.Clear();
+
+                    foreach (var categoryId in updateGameDto.Categories)
+                    {
+                        game.GameCategories.Add(new GameCategory
+                        {
+                            GameId = game.Id,
+                            CategoryId = categoryId
+                        });
+                    }
                 }
 
                 if (updateGameDto.Cover != null && updateGameDto.Cover.Length > 0)
@@ -274,7 +288,7 @@ namespace CapStoneBackEnd.Services
                     game.CoverLarge = Path.Combine("assets", "images", fileName).Replace("\\", "/");
                 }
                 game.Description = updateGameDto.Description;
-                game.Price = updateGameDto.Price;
+                game.Price = ParsePrice(updateGameDto.Price);
 
                 return await SaveAsync();
             }

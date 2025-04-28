@@ -211,6 +211,25 @@ body {
   transform: scale(1.03);
 }
 
+.custom-button-danger {
+  background: linear-gradient(90deg, #ce1a1a 0%, #8a1111 100%);
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 0.2em;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.custom-button-danger:hover {
+  background: linear-gradient(90deg, #a31212 0%, #6d0d0d 100%);
+  transform: scale(1.03);
+}
+
 .custom-button-whishlist {
   background-color: #1a472a !important;
   border-color: #1a472a !important;
@@ -611,4 +630,12 @@ table.table-custom,
 .custom-search-admin::placeholder {
   color: #bbb !important;
   opacity: 1 !important;
+}
+
+.border-custom {
+  border-color: #101518 !important;
+}
+
+.custom-modal {
+  background-color: #212529 !important;
 }

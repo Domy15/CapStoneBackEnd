@@ -5,9 +5,11 @@ import { getCompanies } from "../../redux/actions/company";
 import { addGame } from "../../redux/actions/games";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const AddGame = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [categories, setCategories] = useState([]);
     const [companies, setCompanies] = useState([]);
     const [errors, setErrors] = useState({});
@@ -97,6 +99,9 @@ const AddGame = () => {
             const response = await addGame(formData);
             if (response.success) {
                 toast.success("Gioco aggiunto con successo!");
+                dispatch({
+                    type: "UPDATE"
+                });
                 navigate("/admin");
             } else {
                 toast.error("Errore nell'aggiunta del gioco!");
@@ -270,7 +275,8 @@ const AddGame = () => {
                     </div>
                     {errors.categoriesId && <div className="text-danger small mt-2">{errors.categoriesId}</div>}
                 </Form.Group>
-                <button type="submit" className="custom-button">Aggiungi gioco</button>
+                <button type="submit" className="custom-button me-3">Aggiungi gioco</button>
+                <button type="button" className="custom-button-danger" onClick={() => navigate("/admin")}>Annulla</button>
             </Form>
         </Container>
     );

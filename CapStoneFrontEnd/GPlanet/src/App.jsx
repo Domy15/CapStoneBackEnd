@@ -26,6 +26,7 @@ import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminPage from './components/Admin/AdminPage';
 import AddGame from './components/Admin/AddGame';
+import UpdateGame from './components/Admin/UpdateGame';
 
 function App() {
   const dispatch = useDispatch();
@@ -91,7 +92,7 @@ function App() {
         pageTitle = `Carrello di ${userName.toUpperCase()}`;
         break;
 
-      case path === "/admin":
+      case path.startsWith("/admin"):
         if (!userName) return;
         pageTitle = `Admin :: ${userName.toUpperCase()}`;
         break;
@@ -120,6 +121,7 @@ function App() {
         <Route path="/profile/settings" element={<ProtectedRoute children={<ProfileSettings />} allowedRoles={["User", "Admin"]} />} />
         <Route path="/admin" element={<ProtectedRoute children={<AdminPage />} allowedRoles={["Admin"]} />} />
         <Route path="/admin/addGame" element={<ProtectedRoute children={<AddGame />} allowedRoles={["Admin"]} />} />
+        <Route path="/admin/:id" element={<ProtectedRoute children={<UpdateGame />} allowedRoles={["Admin"]} />} />
         <Route path="/games" element={<GamesList />} />
         <Route path="/game/:id" element={<DetailsPage />} />
 

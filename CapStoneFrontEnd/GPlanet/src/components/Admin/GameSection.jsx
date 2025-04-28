@@ -28,7 +28,7 @@ const GameSection = () => {
         getGames();
     }, [update])
     return (
-        <Col md={10}>
+        <div>
             <h2 className="text-white">Gestione Giochi</h2>
             <div className="p-3 rounded row justify-content-between my-4" style={{ backgroundColor: "#212529" }}>
                 <Form className="d-flex search-form col-6">
@@ -47,7 +47,7 @@ const GameSection = () => {
                 (<button className="custom-button" onClick={() => setSliceGame(gamesFiltered.length)}>Mostra tutti</button>) :
                 (search === "" && <button className="custom-button" onClick={() => setSliceGame(9)}>Mostra meno</button>)
             }
-        </Col>
+        </div>
     );
 }
 

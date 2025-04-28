@@ -639,3 +639,11 @@ table.table-custom,
 .custom-modal {
   background-color: #212529 !important;
 }
+
+.sidebar {
+  position: fixed;
+}
+
+.main-content {
+  margin-left: 20em;
+}

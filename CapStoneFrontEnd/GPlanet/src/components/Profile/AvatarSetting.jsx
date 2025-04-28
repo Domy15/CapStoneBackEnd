@@ -24,7 +24,13 @@ const AvatarSetting = ({ profile }) => {
         formData.append("imageFile", file);
 
         toast.promise(
-            changePfp(formData, profile.userName),
+            (async () => {
+                const response = await changePfp(formData, profile.userName);
+                if (!response.success) {
+                    throw new Error(response.message);
+                }
+                return response.message;
+            })(),
             {
                 pending: "Caricamento avatar...",
                 success: "Avatar aggiornato con successo! 🎉",

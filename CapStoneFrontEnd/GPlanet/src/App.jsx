@@ -27,6 +27,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminPage from './components/Admin/AdminPage';
 import AddGame from './components/Admin/AddGame';
 import UpdateGame from './components/Admin/UpdateGame';
+import AddExtraImages from './components/Admin/AddExtraImages';
 
 function App() {
   const dispatch = useDispatch();
@@ -122,6 +123,7 @@ function App() {
         <Route path="/admin" element={<ProtectedRoute children={<AdminPage />} allowedRoles={["Admin"]} />} />
         <Route path="/admin/addGame" element={<ProtectedRoute children={<AddGame />} allowedRoles={["Admin"]} />} />
         <Route path="/admin/:id" element={<ProtectedRoute children={<UpdateGame />} allowedRoles={["Admin"]} />} />
+        <Route path="/admin/extraImges/:id" element={<ProtectedRoute children={<AddExtraImages />} allowedRoles={["Admin"]} />} />
         <Route path="/games" element={<GamesList />} />
         <Route path="/game/:id" element={<DetailsPage />} />
 

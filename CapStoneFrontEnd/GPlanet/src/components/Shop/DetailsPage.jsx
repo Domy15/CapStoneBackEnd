@@ -33,7 +33,9 @@ const DetailsPage = () => {
                 payload: game.title
             })
             setGame(game);
-            const image = getMainImage(game.coverLarge);
+            const image = game.extraImages && game.extraImages.length > 0
+                ? getMainImage(game.extraImages[0].image)
+                : getMainImage(game.coverLarge);
             setMainImage(image);
             setLoading(false);
             setError(false);

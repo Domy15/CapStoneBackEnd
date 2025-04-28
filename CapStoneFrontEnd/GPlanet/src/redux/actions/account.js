@@ -136,7 +136,9 @@ export const changePfp = async (form, userName) => {
     },
     body: form,
   });
-  if (!response.ok) throw new Error("Errore nel aggiornamento dei dati!");
+  const data = await response.json();
+  if (!response.ok) return { success: false, message: data.message };
+  return { success: true, message: data.message };
 };
 
 const updateProfileURL = "https://localhost:7227/api/Account/UpdateProfile/";

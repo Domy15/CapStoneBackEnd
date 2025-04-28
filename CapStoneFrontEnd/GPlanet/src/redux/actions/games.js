@@ -70,3 +70,28 @@ export const deleteGame = async (id) => {
   if (!response.ok) return { success: false, message: data.message };
   return { success: true, message: data.message };
 };
+
+export const addExtraImages = async (id, form) => {
+  const response = await fetch(`${API_BASE}/extraImages/${id}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: form,
+  });
+  const data = await response.json();
+  if (!response.ok) return { success: false, message: data.message };
+  return { success: true, message: data.message };
+};
+
+export const deleteExtraImages = async (id) => {
+  const response = await fetch(`${API_BASE}/extraImages/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) return { success: false, message: data.message };
+  return { success: true, message: data.message };
+};

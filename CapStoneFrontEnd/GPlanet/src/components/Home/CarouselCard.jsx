@@ -50,8 +50,8 @@ const CarouselCard = ({ game, index }) => {
                                     <img
                                         src={image.image.startsWith("http") ? image.image : `https://localhost:7227/${image.image}`}
                                         style={{
-                                            width: "100%",
-                                            maxWidth: "140px"
+                                            width: "5em",
+                                            height: "3em"
                                         }}
                                         alt={`Extra Image ${i}`}
                                     />

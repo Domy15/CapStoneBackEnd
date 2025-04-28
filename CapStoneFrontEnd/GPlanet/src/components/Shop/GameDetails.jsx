@@ -1,7 +1,7 @@
 import { Badge, Col, Image, Row, Spinner } from "react-bootstrap";
 
 const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
-    
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString("it-IT", {
@@ -39,14 +39,7 @@ const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
                                         src={fullUrl}
                                         alt={`extra-${index}`}
                                         style={{ width: 100, height: 60, objectFit: "cover", cursor: "pointer", border: "none" }}
-                                        onMouseEnter={() => setMainImage(fullUrl)}
-                                        onMouseLeave={() =>
-                                            setMainImage(
-                                                game.coverLarge.startsWith("http")
-                                                    ? game.coverLarge
-                                                    : `https://localhost:7227/${game.coverLarge}`
-                                            )
-                                        }
+                                        onClick={() => setMainImage(fullUrl)}
                                     />
                                 );
                             })}
@@ -55,7 +48,12 @@ const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
                 </Col>
 
                 <Col md={5}>
-                    <h2 className="mb-3">{game.title}</h2>
+                    <Image
+                        src={game.coverLarge.startsWith("http") ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
+                        style={{ width: "100%", height: "10em", objectFit: "cover", border: "none" }}
+                        className="mt-3 mt-md-0"
+                    />
+                    <h2 className="my-3">{game.title}</h2>
                     <p>{game.description || "Descrizione non disponibile."}</p>
 
                     <div className="mb-2">

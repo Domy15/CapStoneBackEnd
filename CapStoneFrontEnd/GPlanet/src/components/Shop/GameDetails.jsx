@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { Badge, Col, Image, Row, Spinner } from "react-bootstrap";
 
 const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
+    const [selectedImage, setSelectedImage] = useState(mainImage);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -11,6 +13,9 @@ const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
         });
     };
 
+    useEffect(() => {
+        setSelectedImage(mainImage);
+    }, [mainImage]);
     return (
         <>
             {loading ? (
@@ -33,13 +38,14 @@ const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
                         <div className="d-flex gap-2 flex-wrap">
                             {game.extraImages.map((img, index) => {
                                 const fullUrl = img.image.startsWith("http") ? img.image : `https://localhost:7227/${img.image}`;
+                                const isSelected = selectedImage === fullUrl;
                                 return (
                                     <Image
                                         key={index}
                                         src={fullUrl}
                                         alt={`extra-${index}`}
-                                        style={{ width: 100, height: 60, objectFit: "cover", cursor: "pointer", border: "none" }}
-                                        onClick={() => setMainImage(fullUrl)}
+                                        style={{ width: 100, height: 60, objectFit: "cover", cursor: "pointer", border: isSelected ? "2px solid white" : "none" }}
+                                        onClick={() => { setMainImage(fullUrl); setSelectedImage(fullUrl); }}
                                     />
                                 );
                             })}

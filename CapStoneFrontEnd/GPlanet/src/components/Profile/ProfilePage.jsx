@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Card, Col, Container, Image, Row } from "react-bootstrap";
 import { getProfile } from "../../redux/actions/account";
@@ -8,39 +7,31 @@ import { Person } from "react-bootstrap-icons";
 import ProfileSection from "./ProfileSection";
 import GameSectionProfile from "./GameSectionProfile";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState(null);
     const [library, setLibrary] = useState([]);
     const [wishList, setWishList] = useState([]);
     const update = useSelector(state => state.update);
-
-    const checkLibrary = async (userName) => {
-        try {
-            const data = await fetchLibrary(userName);
-            setLibrary(data.library);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const loadWishlist = async (userName) => {
-        try {
-            const data = await fetchWishlist(userName);
-            setWishList(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchProfile = async () => {
+        setIsLoading(true);
         try {
             const data = await getProfile();
             setProfile(data.profile);
-            checkLibrary(data.profile.userName);
-            loadWishlist(data.profile.userName);
+            const [libraryData, wishListData] = await Promise.all([
+                fetchLibrary(data.profile.userName),
+                fetchWishlist(data.profile.userName)
+            ]);
+
+            setLibrary(libraryData.library);
+            setWishList(wishListData);
         } catch (error) {
-            console.error("Errore nel caricamento del profilo:", error);
+            toast.error("Errore nel caricamento del profilo: ", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -50,8 +41,8 @@ const ProfilePage = () => {
 
     return (
         <Container className="text-white py-4 margin-top-library vh-100 animated-gradient">
-            {profile && <ProfileSection profile={profile} />}
-            {library && wishList && <GameSectionProfile library={library} wishList={wishList} />}
+            {profile && <ProfileSection profile={profile} isLoading={isLoading} />}
+            {library && wishList && <GameSectionProfile library={library} wishList={wishList} isLoading={isLoading} />}
         </Container>
     );
 };

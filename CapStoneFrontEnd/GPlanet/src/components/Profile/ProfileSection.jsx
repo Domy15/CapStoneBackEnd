@@ -1,7 +1,9 @@
 import { Col, Image, Row } from "react-bootstrap";
+import { AspectRatio } from "react-bootstrap-icons";
+import Skeleton from "react-loading-skeleton";
 import { useNavigate } from "react-router-dom";
 
-const ProfileSection = ({ profile }) => {
+const ProfileSection = ({ profile, isLoading }) => {
     const navigate = useNavigate();
 
     const formatDate = (dateString) => {
@@ -16,7 +18,7 @@ const ProfileSection = ({ profile }) => {
     return (
         <Row className="align-items-center mb-4">
             <Col xs={3} md={2}>
-                <Image
+                {!isLoading ? <Image
                     src={
                         profile.imageProfile
                             ? `https://localhost:7227/${profile.imageProfile}`
@@ -24,11 +26,11 @@ const ProfileSection = ({ profile }) => {
                     }
                     roundedCircle
                     className="img-thumbnail border border-primary bg-dark"
-                />
+                /> : <Skeleton circle={true} baseColor="#282B2E" highlightColor="#2F3234" width="100%" height="auto" style={{ aspectRatio: "1 / 1" }} className="img-thumbnail border border-primary bg-dark" />}
             </Col>
             <Col>
-                <h1 className="text-white">{profile.userName}</h1>
-                <p className="text-white">{profile.firstName} <small className="text-white opacity-75">{formatDate(profile.birthDate)}</small></p>
+                {!isLoading ? <h1 className="text-white">{profile.userName}</h1> : <Skeleton baseColor="#282B2E" highlightColor="#2F3234" width="8em" height="2.5em" />}
+                {!isLoading ? <p className="text-white">{profile.firstName} <small className="text-white opacity-75">{formatDate(profile.birthDate)}</small></p> : <Skeleton baseColor="#282B2E" highlightColor="#2F3234" width="12em" height="0.8em" />}
                 <button className="button-profile" onClick={() => navigate("/profile/settings")}>Modifica profilo</button>
             </Col>
         </Row>

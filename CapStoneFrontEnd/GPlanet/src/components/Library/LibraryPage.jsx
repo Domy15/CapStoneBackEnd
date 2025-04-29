@@ -7,6 +7,7 @@ import SideBarLibrary from "./SideBarLibrary";
 import { Col, Image, Row } from "react-bootstrap";
 import GameDetailsLibrary from "./GameDetailsLibrary";
 import Skeleton from "react-loading-skeleton";
+import { toast } from "react-toastify";
 
 const LibraryPage = () => {
     const update = useSelector(state => state.update);
@@ -22,7 +23,7 @@ const LibraryPage = () => {
             setLibrary(data.library);
             setIsLoading(false);
         } catch (error) {
-            console.error(error);
+            toast.error("Errore nel caricamento della libreria: ", error);
             setIsLoading(false);
         }
     };

@@ -5,19 +5,24 @@ import AvatarSetting from "./AvatarSetting";
 import { useSelector } from "react-redux";
 import { getProfile } from "../../redux/actions/account";
 import FormSetting from "./FormSetting";
+import { toast } from "react-toastify";
 
 const ProfileSettings = () => {
     const [nav, setNav] = useState(1);
     const navigate = useNavigate();
     const update = useSelector(state => state.update);
     const [profile, setProfile] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchProfile = async () => {
+        setIsLoading(true);
         try {
             const data = await getProfile();
             setProfile(data.profile);
         } catch (error) {
-            console.error("Errore nel caricamento del profilo:", error);
+            toast.error("Errore nel caricamento del profilo:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -37,7 +42,7 @@ const ProfileSettings = () => {
                     </ul>
                 </Col>
                 {nav === 1 && profile && <FormSetting profile={profile} />}
-                {nav === 2 && profile && <AvatarSetting profile={profile} />}
+                {nav === 2 && profile && <AvatarSetting profile={profile} isLoadingProfile={isLoading} />}
             </Row>
         </Container>
     );

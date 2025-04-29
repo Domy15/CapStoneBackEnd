@@ -3,8 +3,9 @@ import { Button, Col, Image, Row } from "react-bootstrap";
 import { changePfp } from "../../redux/actions/account";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
 
-const AvatarSetting = ({ profile }) => {
+const AvatarSetting = ({ profile, isLoadingProfile }) => {
     const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const fileInputRef = useRef();
@@ -67,7 +68,7 @@ const AvatarSetting = ({ profile }) => {
 
             <Row className="mt-5 w-100">
                 <Col xs={3}>
-                    {profile &&
+                    {profile && !isLoadingProfile ?
                         <Image
                             src={
                                 profile.imageProfile
@@ -76,7 +77,7 @@ const AvatarSetting = ({ profile }) => {
                             }
                             roundedCircle
                             className="img-thumbnail border border-primary bg-dark"
-                        />}
+                        /> : <Skeleton circle={true} baseColor="#282B2E" highlightColor="#2F3234" width="100%" height="auto" style={{ aspectRatio: "1 / 1" }} className="img-thumbnail border border-primary bg-dark" />}
                 </Col>
                 <Col>
                     <Button variant="secondary" onClick={triggerFileInput}>Carica il tuo avatar</Button>

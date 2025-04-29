@@ -28,6 +28,7 @@ import AdminPage from './components/Admin/AdminPage';
 import AddGame from './components/Admin/AddGame';
 import UpdateGame from './components/Admin/UpdateGame';
 import AddExtraImages from './components/Admin/AddExtraImages';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function App() {
   const dispatch = useDispatch();

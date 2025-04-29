@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Form, FormControl } from "react-bootstrap";
+import { Form, FormControl } from "react-bootstrap";
 import { fetchGames } from "../../redux/actions/games";
 import { useNavigate } from "react-router-dom";
 import GamesTable from "./GamesTable";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 
-const ModalAdd = ({ show, onHide, handleAdd }) => {
+const ModalAction = ({ show, onHide, handleAction }) => {
     const [element, setElement] = useState("");
     const [error, setError] = useState(null);
 
@@ -10,7 +10,7 @@ const ModalAdd = ({ show, onHide, handleAdd }) => {
             setError("Il campo non può essere vuoto!");
             return;
         }
-        handleAdd(element);
+        handleAction(element);
         setElement("");
         onHide();
     }
@@ -23,7 +23,7 @@ const ModalAdd = ({ show, onHide, handleAdd }) => {
             contentClassName="custom-modal text-white"
         >
             <Modal.Header closeButton className="border-custom">
-                <Modal.Title>Conferma eliminazione</Modal.Title>
+                <Modal.Title>Aggiungi elemento</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Group className="mb-4">
@@ -49,4 +49,4 @@ const ModalAdd = ({ show, onHide, handleAdd }) => {
     );
 }
 
-export default ModalAdd;
+export default ModalAction;

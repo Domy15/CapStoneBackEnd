@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import GameSection from "./GameSection";
 import { useState } from "react";
 import CategorySection from "./CategorySection";
+import CompanySection from "./CompanySection";
 
 
 const AdminPage = () => {
@@ -20,7 +21,7 @@ const AdminPage = () => {
                 <Col md={10} className="main-content">
                     {nav === 1 && <GameSection />}
                     {nav === 2 && <CategorySection />}
-                    {nav === 3 && <h2 className="text-white">Compagnie</h2>}
+                    {nav === 3 && <CompanySection />}
                 </Col>
             </Row>
         </div>

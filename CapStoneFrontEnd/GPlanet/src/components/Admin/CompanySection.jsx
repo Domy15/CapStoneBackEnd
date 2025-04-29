@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
-import CategoryTable from "./CategoryTable";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory, getCategories } from "../../redux/actions/category";
+import { addCompany, getCompanies } from "../../redux/actions/company";
+import CompanyTable from "./CompanyTable";
 import ModalAdd from "./ModalAction";
 import { toast } from "react-toastify";
 
-const CategorySection = () => {
+const CompanySection = () => {
     const update = useSelector(state => state.update);
-    const [categories, setCategories] = useState([]);
+    const [companies, setCompanies] = useState([]);
     const [modalShow, setModalShow] = useState(false);
     const dispatch = useDispatch();
 
-    const fetchCategories = async () => {
+    const fetchCompanies = async () => {
         try {
-            const response = await getCategories();
+            const response = await getCompanies();
             if (response) {
-                const sortedCategories = response.sort((a, b) => a.id - b.id);
-                setCategories(sortedCategories);
+                setCompanies(response);
             }
         }
         catch (error) {
@@ -24,10 +23,10 @@ const CategorySection = () => {
         }
     }
 
-    const handleAdd = async (catName) => {
+    const handleAdd = async (compName) => {
         toast.promise(
             (async () => {
-                const response = await addCategory(catName);
+                const response = await addCompany(compName);
                 if (!response.success) {
                     throw new Error(response.message);
                 }
@@ -35,7 +34,7 @@ const CategorySection = () => {
             })(),
             {
                 pending: "Caricamento in corso...",
-                success: "Categoria caricata con successo!",
+                success: "Compagnia caricata con successo!",
                 error: "Si è verificato un errore durante il caricamento."
             }
         ).then(() => {
@@ -44,18 +43,18 @@ const CategorySection = () => {
     }
 
     useEffect(() => {
-        fetchCategories();
+        fetchCompanies();
     }, [update]);
     return (
         <div>
             <div className="d-flex justify-content-between align-items-center">
-                <h2 className="text-white">Gestione Categorie</h2>
-                <button className="custom-button py-2" onClick={() => setModalShow(true)}>Aggiungi nuova categoria</button>
+                <h2 className="text-white">Gestione Compagnie</h2>
+                <button className="custom-button py-2" onClick={() => setModalShow(true)}>Aggiungi nuova compagnia</button>
             </div>
-            {categories && <CategoryTable categories={categories} />}
+            {companies && <CompanyTable companies={companies} />}
             <ModalAdd show={modalShow} onHide={() => setModalShow(false)} handleAction={handleAdd} />
         </div>
     );
 }
 
-export default CategorySection;
+export default CompanySection;

@@ -70,9 +70,9 @@ const GamesTable = ({ games, sliceNumber }) => {
                             </td>
                         </tr>
                     ))}
-                    <ModalDelete show={modalShow} onHide={() => setModalShow(false)} handleDelete={() => handleDelete(selectedId)} />
                 </tbody>
             </table>
+            <ModalDelete show={modalShow} onHide={() => setModalShow(false)} handleDelete={() => handleDelete(selectedId)} />
         </div>
     );
 }

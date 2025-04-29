@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import GameSection from "./GameSection";
 import { useState } from "react";
+import CategorySection from "./CategorySection";
 
 
 const AdminPage = () => {
@@ -18,7 +19,7 @@ const AdminPage = () => {
                 </Col>
                 <Col md={10} className="main-content">
                     {nav === 1 && <GameSection />}
-                    {nav === 2 && <h2 className="text-white">Categorie</h2>}
+                    {nav === 2 && <CategorySection />}
                     {nav === 3 && <h2 className="text-white">Compagnie</h2>}
                 </Col>
             </Row>

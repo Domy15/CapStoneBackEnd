@@ -41,7 +41,7 @@ const ModalAction = ({ show, onHide, handleAction }) => {
                 <button className="custom-button-secondary" onClick={onHide}>
                     Annulla
                 </button>
-                <button className="custom-button-danger" onClick={handleClick}>
+                <button className="custom-button" onClick={handleClick}>
                     Aggiungi
                 </button>
             </Modal.Footer>

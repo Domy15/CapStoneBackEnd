@@ -63,9 +63,9 @@ const GamesTable = ({ games, sliceNumber }) => {
                             </td>
                             <td>{game.company}</td>
                             <td>{game.price > 0 ? `${game.price}€` : "Free-to-Play"}</td>
-                            <td>
-                                <Button className="me-2 button-update" onClick={() => navigate(`/admin/${game.id}`)}><Pencil className="text-white" /></Button>
-                                <Button className="me-2 button-delete" onClick={() => { setModalShow(true); setSelectedId(game.id); }}><Trash className="text-white" /></Button>
+                            <td style={{ whiteSpace: "nowrap" }}>
+                                <Button className="me-1 button-update" onClick={() => navigate(`/admin/${game.id}`)}><Pencil className="text-white" /></Button>
+                                <Button className="me-1 button-delete" onClick={() => { setModalShow(true); setSelectedId(game.id); }}><Trash className="text-white" /></Button>
                                 <Button className="button-add" onClick={() => navigate(`/admin/extraImges/${game.id}`)}><Image className="text-white" /></Button>
                             </td>
                         </tr>

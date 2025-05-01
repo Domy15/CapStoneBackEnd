@@ -6,7 +6,7 @@ import GamesTable from "./GamesTable";
 import { useSelector } from "react-redux";
 
 const GameSection = () => {
-    const [games, setGames] = useState([]);
+    const [gamesData, setGamesData] = useState([]);
     const [sliceGame, setSliceGame] = useState(9);
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
@@ -16,11 +16,12 @@ const GameSection = () => {
         const { games, error } = await fetchGames();
 
         if (!error) {
-            setGames(games);
+            const sortedGames = games.sort((a, b) => a.title.localeCompare(b.title));
+            setGamesData(sortedGames);
         }
     };
 
-    const gamesFiltered = games.filter(game =>
+    const gamesFiltered = gamesData.filter(game =>
         game.title.toLowerCase().includes(search.toLowerCase())
     );
 

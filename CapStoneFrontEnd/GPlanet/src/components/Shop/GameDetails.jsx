@@ -35,7 +35,7 @@ const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
                         style={{ height: "25em" }}
                     />
                     {game.extraImages?.length > 0 &&
-                        <div className="d-flex gap-2 flex-wrap">
+                        <div className="d-flex gap-2 flex-nowrap overflow-x-scroll extra-images pb-1">
                             {game.extraImages.map((img, index) => {
                                 const fullUrl = img.image.startsWith("http") ? img.image : `https://localhost:7227/${img.image}`;
                                 const isSelected = selectedImage === fullUrl;

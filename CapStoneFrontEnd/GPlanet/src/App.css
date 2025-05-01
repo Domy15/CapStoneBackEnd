@@ -440,23 +440,31 @@ body {
 }
 
 .game-list::-webkit-scrollbar,
-main::-webkit-scrollbar {
+main::-webkit-scrollbar,
+.extra-images::-webkit-scrollbar {
   width: 0.5em;
 }
 
+.extra-images::-webkit-scrollbar {
+  height: 0.5em;
+}
+
 .game-list::-webkit-scrollbar-thumb,
-main::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb,
+.extra-images::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 10px;
 }
 
 .game-list::-webkit-scrollbar-thumb:hover,
-main::-webkit-scrollbar-thumb:hover {
+main::-webkit-scrollbar-thumb:hover, 
+.extra-images::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 
 .game-list::-webkit-scrollbar-track,
-main::-webkit-scrollbar-track {
+main::-webkit-scrollbar-track, 
+.extra-images::-webkit-scrollbar-track {
   background: transparent;
 }
 

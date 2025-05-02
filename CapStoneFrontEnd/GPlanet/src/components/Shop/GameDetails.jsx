@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Badge, Col, Image, Row, Spinner } from "react-bootstrap";
+import ButtonsWishlistDetails from "./ButtonsWishlistDetails";
 
 const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
     const [selectedImage, setSelectedImage] = useState(mainImage);
@@ -51,12 +52,15 @@ const GameDetails = ({ game, loading, error, mainImage, setMainImage }) => {
                             })}
                         </div>
                     }
+                    {!loading && !error && (
+                        <ButtonsWishlistDetails />
+                    )}
                 </Col>
 
                 <Col md={5}>
                     <Image
                         src={game.coverLarge.startsWith("http") ? game.coverLarge : `https://localhost:7227/${game.coverLarge}`}
-                        style={{ width: "100%", height: "10em", objectFit: "cover", border: "none" }}
+                        style={{ width: "100%", height: "15em", objectFit: "cover", border: "none" }}
                         className="mt-3 mt-md-0"
                     />
                     <h2 className="my-3">{game.title}</h2>

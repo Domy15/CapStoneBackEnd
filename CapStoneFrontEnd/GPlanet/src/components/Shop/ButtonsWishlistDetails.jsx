@@ -60,15 +60,15 @@ const ButtonsWishlistDetails = () => {
         <>
             {userName && (
                 !isThere ? (
-                    <Button className="custom-button-whishlist mt-4" onClick={handleAddToWishList}>
+                    <Button className="custom-button-whishlist mt-2" onClick={handleAddToWishList}>
                         Aggiungi alla lista desideri
                     </Button>
                 ) : (
                     <div className="d-flex">
-                        <Button className="custom-button-whishlist mt-4 d-flex" onClick={handleRemoveFromWishList}>
+                        <Button className="custom-button-whishlist mt-2 d-flex" onClick={handleRemoveFromWishList}>
                             <CheckSquare className="fs-5 me-1" /> Nella lista desideri
                         </Button>
-                        <Dropdown className="mt-4 ms-1" align="end">
+                        <Dropdown className="mt-2 ms-1" align="end">
                             <Dropdown.Toggle split className="custom-button-whishlist" id="dropdown-split-basic" />
                             <Dropdown.Menu className="bg-dark">
                                 <Dropdown.Item className="text-white" onClick={handleRemoveFromWishList}>

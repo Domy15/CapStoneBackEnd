@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "react-bootstrap";
 import GameDetails from "./GameDetails";
-import ButtonsWishlistDetails from "./ButtonsWishlistDetails";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PurchaseBox from "./PurchaseBox";
@@ -61,9 +60,6 @@ const DetailsPage = () => {
     return (
         <Container className="text-white mt-4">
             <GameDetails game={game} loading={loading} error={error} mainImage={mainImage} setMainImage={setMainImage} />
-            {!loading && !error && (
-                <ButtonsWishlistDetails />
-            )}
             {!loading && !error && game && (
                 <PurchaseBox game={game} />
             )}

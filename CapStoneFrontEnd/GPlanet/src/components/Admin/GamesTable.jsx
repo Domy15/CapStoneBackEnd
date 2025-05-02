@@ -46,14 +46,14 @@ const GamesTable = ({ games, sliceNumber }) => {
                 <tbody>
                     {games.slice(0, sliceNumber).map((game) => (
                         <tr key={game.id}>
-                            <td>
+                            <td onClick={() => navigate(`/game/${game.id}`)} style={{ cursor: "pointer" }}>
                                 <img
                                     src={game.cover.startsWith("http") ? game.cover : `https://localhost:7227/${game.cover}`}
                                     alt={game.title}
                                     style={{ width: "3.5em", height: "3.5em", objectFit: "cover", borderRadius: "8px" }}
                                 />
                             </td>
-                            <td>{game.title}</td>
+                            <td onClick={() => navigate(`/game/${game.id}`)} style={{ cursor: "pointer" }}>{game.title}</td>
                             <td>
                                 {game.categories && game.categories.length > 0 &&
                                     game.categories.map((category, index) => (

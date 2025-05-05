@@ -27,7 +27,7 @@ const ModalAction = ({ show, onHide, handleAction }) => {
             </Modal.Header>
             <Modal.Body>
                 <Form.Group className="mb-4">
-                    <Form.Label className="text-uppercase text-secondary small">Nome categoria</Form.Label>
+                    <Form.Label className="text-uppercase text-secondary small">Nome</Form.Label>
                     <Form.Control
                         type="text"
                         value={element}

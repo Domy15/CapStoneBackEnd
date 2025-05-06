@@ -76,7 +76,7 @@ const AvatarSetting = ({ profile, isLoadingProfile }) => {
                                     : "https://sdmntpritalynorth.oaiusercontent.com/files/00000000-1778-6246-b593-32c3ea8d9707/raw?se=2025-04-22T12%3A39%3A20Z&sp=r&sv=2024-08-04&sr=b&scid=df085146-a50b-5979-b31e-5296d4f5e8f0&skoid=59d06260-d7df-416c-92f4-051f0b47c607&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T05%3A32%3A04Z&ske=2025-04-23T05%3A32%3A04Z&sks=b&skv=2024-08-04&sig=itbxPBU55Qn2Ku%2Bi9/TPQnjegoPTrToPSs9cJOfvNnI%3D"
                             }
                             roundedCircle
-                            className="img-thumbnail border border-primary bg-dark"
+                            className="img-thumbnail border border-primary bg-dark avatar"
                         /> : <Skeleton circle={true} baseColor="#282B2E" highlightColor="#2F3234" width="100%" height="auto" style={{ aspectRatio: "1 / 1" }} className="img-thumbnail border border-primary bg-dark" />}
                 </Col>
                 <Col>

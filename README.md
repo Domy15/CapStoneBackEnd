@@ -66,6 +66,20 @@ await _userManager.AddToRoleAsync(user, "Admin");
 
 Per tornare alla modalità utente normale, ripristina "User" come nel codice originale.
 
+FUNZIONALITÀ
+
+Nel sito avrai diverse pagine, le principali sono: 
+
+1. Home, dove si aprirà il sito inizialmente.
+
+2. La pagina della lista di tutti i giochi acquistabili (filtrabili per categorie, barra di ricerca e prezzo).
+
+3. La pagina di dettaglio di ogni gioco (con relatici commenti), ed è possibile aggiungerlo alla lista desideri o il carrello.
+
+4. Lista desideri dove potrai inserire i giochi che ti interessano.
+
+5. Carrello dove potrai procedere all'acquisto dei giochi inseriti.
+
 CONCLUSIONE
 
 Ora sei pronto/a per usare G-Planet! Per qualsiasi problema o contributo, sentiti libero di aprire una issue su GitHub.

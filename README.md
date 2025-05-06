@@ -1,28 +1,71 @@
-Benvenuto/a nel mio progetto che è stonzialmente una piattaforma di distribuzione e gestione per videogiochi.
+Benvenuto/a in G-Planet, una piattaforma di distribuzione e gestione di videogiochi.
 
-G-Planet è il nome dell'app, derivato da "G" come "G-Rank" di monster hunter il grado dei cacciatori più alto che sta ad indicare la competenza di chi gioca sulla mia piattaforma, "Planet" è facilmente intuibile e sta per "pianeta" ovviamente, indicando un pianeta di videogiocatori.
+Il nome “G-Planet” deriva da “G” come in “G-Rank” (il grado più alto dei cacciatori in Monster Hunter, simbolo di abilità e competenza), e “Planet” per indicare un pianeta interamente dedicato ai videogiocatori.
 
-G-Planet è un client multipiattaforma (disponibile per Windows, macOS, Linux, Android e iOS) che consente agli utenti di:
+COS'È G-PLANET?
+
+G-Planet è un client multipiattaforma disponibile per Windows, macOS, Linux, Android e iOS, che consente agli utenti di:
 
 -Acquistare, scaricare e aggiornare automaticamente videogiochi e software.
 -Accedere a una libreria personale di giochi.
--Usare funzionalità social come le recensioni.
+-Utilizzare funzionalità social, come scrivere e leggere recensioni.
 
 COME SI USA
 
-Per prima cosa scaricare l'intera repository dal mio github dove all'interno si troveranno vari file, quelli che ci interessano sono il file "CapStoneBackEnd.sln" e la cartella "CapStoneFrontEnd".
+Per prima cosa scarica l’intera repository da GitHub. I file principali che ci interessano sono: CapStoneBackEnd.sln e La cartella CapStoneFrontEnd.
 
-Apri il file .sln da Visual Studio e cliccare in alto nell'opzione "strumenti" > "Gestione pacchetti nuget" > "Console di gestione pacchetti" e inserire il comando: "dotnet restore". 
+Apri il file CapStoneBackEnd.sln da Visual Studio e Vai su Strumenti > Gestione pacchetti NuGet > Console di gestione pacchetti e inserisci il comando: "dotnet restore". 
 Ora hai i pacchetti di dipendenze necessari per il funzionamento dell'API. 
 
-Bisogna assicurarsi che in "application.json" la "ConnectionStrings" sia esatta, Per farlo bisogna cambiare la prima parte dove c'è scritto "Server=" sostituire il nome "DESKTOP-J1ROP3V" con quello del proprio pc e in "User Id=" e "Password=" sostituire con le proprie credenziali di SQL. 
+Apri il file appsettings.json e configura la stringa di connessione. Sostituisci i seguenti campi con i tuoi dati locali: 
 
-Ora sempre nella console di comando delle gestione pacchetti eseguire: "Add-Migration Initial" e poi "Update-Database" (Devi assicurarti di avere SQL configurato e attivo). Ora hai il database dove poter salvare i dati con anche qualche dato iniziale. Se tutto è andato bene potrai avviare l'API cliccando in alto sull'icona del trangolo verde con scritto "https" vicino (assicurarsi che sia sempre attivo mentre si utilizza l'app).
+"Server=NOME_DEL_TUO_PC;User Id=TUO_USERNAME_SQL;Password=LA_TUA_PASSWORD_SQL;"
 
-Passiamo al front-end, la cartella che ci interessa è "CapStoneFrontEnd", al suo interno ci sarà un'altra cartella "G-Planet", aprila con Visual Studio Code.
-In alto nella navigazione di Visual Studio Code cliccare su "terminal" > "new terminal", questo aprirà una console di comandi, qui dovremmo scaricare le dipendeze del pacchetto con il comando: "npm i".
+Torna alla console di gestione pacchetti e lancia:
+Add-Migration Initial
+Update-Database
 
-Ora dovresti avere tutto quello che ti serve per poter utilizzare l'app. Per avviarla nella console di comandi dove hai scaricato le dipende digitare il comando: "pnpm run dev", uscirà un link che sarà il domini in locale della pagina cliccateci tenendo premuto "ctrl" ed ecco che dovrebbe aprirsi il browser con la pagina attiva nella home. Da lì potrete crearvi un account e navigare tra le funzioni dell'app.
+(Assicurati che SQL Server sia attivo e correttamente configurato).
 
-!ATTENZIONE: l'account che andrete a registrare sarà un account di un normale utente, quindi le funzionalità dell'admin non saranno disponibili. Per fare in modo che l'account che andiate a creare si admin dovrete tornare al back-end su Visual Studio, andare nella cartella "controller" e cliccare su "AccountController.cs" e a riga 83 dove c'è scitto "await _userManager.AddToRoleAsync(user, "User");" cambiare "User" con "Admin" e riavviare l'API.
-Così vi assicurerete che i prossimi account che andrete a creare siano amministratori e non utenti.
+Ora puoi avviare l’API cliccando sull’icona del triangolo verde con scritto "https" accanto. Lascia l'API attiva mentre utilizzi l'app.
+
+FRONTEND (UI)
+
+1. Vai nella cartella CapStoneFrontEnd, poi in G-Planet.
+
+2. Apri quest’ultima cartella con Visual Studio Code.
+
+3. Apri il terminale con: Terminal > New Terminal
+
+4. Installa le dipendenze del progetto con: npm install
+
+5. Avvia il progetto con: npm run dev, sempre nel terminale
+
+Verrà mostrato un link (es. http://localhost:3000) cliccabile con Ctrl + Click: questo aprirà l'app nel browser sulla home.
+Da qui puoi creare un account e iniziare a esplorare le funzionalità dell'applicazione.
+
+⚠️ ACCOUNT AMMINISTRATORE
+
+L’account che registri di default sarà un utente normale.
+Questo non ti permetterà l'uso di funzionalità da amministratore.
+Per assegnare il ruolo di amministratore agli account che creerai:
+
+1. Apri il backend in Visual Studio.
+
+2. Vai nella cartella Controllers > apri AccountController.cs.
+
+3. Alla riga 83, modifica questa istruzione:
+
+await _userManager.AddToRoleAsync(user, "User");
+
+in:
+
+await _userManager.AddToRoleAsync(user, "Admin");
+
+4. Riavvia l’API.
+
+Per tornare alla modalità utente normale, ripristina "User" come nel codice originale.
+
+CONCLUSIONE
+
+Ora sei pronto/a per usare G-Planet! Per qualsiasi problema o contributo, sentiti libero di aprire una issue su GitHub.

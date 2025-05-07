@@ -457,13 +457,13 @@ main::-webkit-scrollbar-thumb,
 }
 
 .game-list::-webkit-scrollbar-thumb:hover,
-main::-webkit-scrollbar-thumb:hover, 
+main::-webkit-scrollbar-thumb:hover,
 .extra-images::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 
 .game-list::-webkit-scrollbar-track,
-main::-webkit-scrollbar-track, 
+main::-webkit-scrollbar-track,
 .extra-images::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -702,4 +702,9 @@ table.table-custom,
     width: 100px !important;
     height: 100px !important;
   }
+}
+
+.avatar-navbar {
+  width: 60px !important;
+  height: 60px !important;
 }

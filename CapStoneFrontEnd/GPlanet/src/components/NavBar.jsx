@@ -1,10 +1,11 @@
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Image, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Person } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
-import { Logout } from "../redux/actions/account";
-import { useEffect } from "react";
+import { getProfile, Logout } from "../redux/actions/account";
+import { useEffect, useState } from "react";
 import logo from "../assets/LogoGPlanet.png"
+import { toast } from "react-toastify";
 
 const NavBar = () => {
     const profile = useSelector(state => state.profile);
@@ -14,13 +15,27 @@ const NavBar = () => {
     const isGameDetail = useMatch("/game/:id");
     const isVisible = ["/", "/games"].includes(location.pathname) || isGameDetail;
     const isPath = location.pathname.startsWith("/profile") || location.pathname === "/login" || location.pathname === "/register";
+    const [account, setAccount] = useState();
 
     const logoutAccount = () => {
         dispatch(Logout())
         navigate("/login")
     }
 
+    const fetchProfile = async () => {
+        try {
+            const data = await getProfile();
+            console.log(data.profile.imageProfile);
+            setAccount(data.profile);
+        } catch (error) {
+            toast.error("Errore nel caricamento del profilo: ", error);
+        }
+    };
+
     useEffect(() => {
+        if (profile.userName) {
+            fetchProfile();
+        }
     }, [profile])
 
     return (
@@ -47,7 +62,16 @@ const NavBar = () => {
                     )}
                 </Nav>
 
-                <NavDropdown title={<Person />} id="basic-nav-dropdown" className="ms-auto text-secondary fs-4" align="end">
+                <NavDropdown title={account && profile.userName ? <Image
+                    src={
+                        account.imageProfile
+                            ? `https://localhost:7227/${account.imageProfile}`
+                            : "https://sdmntpritalynorth.oaiusercontent.com/files/00000000-1778-6246-b593-32c3ea8d9707/raw?se=2025-04-22T12%3A39%3A20Z&sp=r&sv=2024-08-04&sr=b&scid=df085146-a50b-5979-b31e-5296d4f5e8f0&skoid=59d06260-d7df-416c-92f4-051f0b47c607&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T05%3A32%3A04Z&ske=2025-04-23T05%3A32%3A04Z&sks=b&skv=2024-08-04&sig=itbxPBU55Qn2Ku%2Bi9/TPQnjegoPTrToPSs9cJOfvNnI%3D"
+                    }
+                    roundedCircle
+                    className="img-thumbnail border border-primary bg-dark avatar-navbar"
+                /> : <Person />}
+                    id="basic-nav-dropdown" className="ms-auto text-secondary fs-4" align="end">
                     {profile.userName != null ? (
                         <>
                             <NavDropdown.Item onClick={logoutAccount}>Esci</NavDropdown.Item>

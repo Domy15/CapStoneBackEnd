@@ -7,7 +7,7 @@ const SideBarLibrary = ({ library, setSelectedGame, isLoading }) => {
 
     return (
 
-        <aside className="library-sidebar d-sm-none d-xl-block">
+        <aside className="library-sidebar d-none d-xl-block">
             {!isLoading ?
                 <>
                     <h5 className="sidebar-title d-flex align-items-center">

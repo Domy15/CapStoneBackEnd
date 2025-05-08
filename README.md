@@ -147,6 +147,13 @@ La pagina profilo è l'ultima pagina accessibile dagli utenti per visualizzare i
 
 Oltre questo nella pagina del profilo saranno visualizzabili dati come il numero di giochi acquistati e quali.
 
+Per ultima la pagina di gestione, visualizzabile solo con un account admin, le funzionalità sono:
+
+1. Aggiunta, modifica ed eliminazione di un gioco.
+
+2. Aggiunta ed eliminazione di una categoria.
+
+3. Aggiunta e modifica di una compagnia.
 
 CONCLUSIONE
 
